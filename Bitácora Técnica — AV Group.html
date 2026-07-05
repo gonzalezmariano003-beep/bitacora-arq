@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)file:///C:/Users/maria/Downloads/bitacora_arq_15.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitácora Técnica — AV Group</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f4f0; color: #1c1c1a; min-height: 100vh; }
+.topbar { background: #1c1c1a; color: #fff; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.topbar-title { font-size: 15px; font-weight: 500; }
+.topbar-sub { font-size: 12px; color: #888; margin-top: 2px; }
+.topbar-actions { display: flex; gap: 8px; align-items: center; }
+.sync-btn { font-size: 12px; padding: 6px 12px; border-radius: 6px; border: 1px solid #444; background: transparent; color: #ccc; cursor: pointer; }
+.sync-btn:hover { background: #333; color: #fff; }
+.search-wrap { position: relative; }
+.search-input { font-size: 13px; padding: 6px 12px 6px 32px; border-radius: 6px; border: 1px solid #444; background: #2a2a2a; color: #fff; width: 200px; }
+.search-input::placeholder { color: #666; }
+.search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #666; font-size: 13px; }
+.container { max-width: 980px; margin: 0 auto; padding: 24px 20px; }
+.breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #888; margin-bottom: 20px; flex-wrap: wrap; }
+.bc-link { cursor: pointer; color: #8b7355; font-weight: 500; }
+.bc-link:hover { text-decoration: underline; }
+.bc-sep { color: #ccc; }
+.bc-cur { color: #1c1c1a; font-weight: 500; }
+
+/* SEARCH RESULTS */
+.search-results { background: #fff; border: 1px solid #e8e5e0; border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+.search-results-title { font-size: 12px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 12px; }
+
+/* CONSEJO */
+.consejo-card { background: #1c1c1a; color: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 24px; display: flex; gap: 14px; align-items: flex-start; }
+.consejo-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+.consejo-label { font-size: 11px; font-weight: 600; color: #8b7355; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 5px; }
+.consejo-text { font-size: 13px; color: #e8e5e0; line-height: 1.6; }
+.consejo-refresh { font-size: 11px; color: #666; margin-top: 8px; cursor: pointer; display: inline-block; }
+.consejo-refresh:hover { color: #8b7355; }
+
+/* VICTORIAS */
+.victorias-card { background: linear-gradient(135deg, #2a1f0a 0%, #1c1c1a 100%); border: 1px solid #5a4a28; border-radius: 12px; padding: 18px 20px; margin-bottom: 24px; }
+.victorias-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.victorias-label { font-size: 11px; font-weight: 600; color: #e6a817; letter-spacing: .06em; text-transform: uppercase; }
+.victorias-count { font-size: 24px; font-weight: 500; color: #e6a817; }
+.victorias-list { display: flex; flex-direction: column; gap: 6px; }
+.victoria-item { font-size: 12px; color: #c8b890; line-height: 1.5; display: flex; gap: 8px; }
+.victoria-bullet { color: #e6a817; flex-shrink: 0; }
+.ver-todas { font-size: 11px; color: #8b7355; cursor: pointer; margin-top: 10px; display: inline-block; }
+.ver-todas:hover { text-decoration: underline; }
+
+/* ULTIMAS */
+.ultimas-section { margin-bottom: 28px; }
+.section-label { font-size: 11px; font-weight: 600; color: #aaa; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; margin-top: 4px; }
+.ultimas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.ultima-card { background: #fff; border: 1px solid #e8e5e0; border-radius: 10px; padding: 12px 14px; cursor: pointer; transition: border-color .15s; }
+.ultima-card:hover { border-color: #8b7355; }
+.ultima-header { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+.ultima-rubro { font-size: 11px; color: #8b7355; font-weight: 500; }
+.ultima-date { font-size: 11px; color: #bbb; margin-left: auto; }
+.ultima-text { font-size: 12px; color: #444; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* GRID */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.card { background: #fff; border: 1px solid #e8e5e0; border-radius: 12px; padding: 16px 14px; cursor: pointer; transition: border-color .15s, box-shadow .15s; position: relative; }
+.card:hover { border-color: #8b7355; box-shadow: 0 2px 12px rgba(139,115,85,.12); }
+.card.card-soft { border-color: #e0ede0; }
+.card.card-soft:hover { border-color: #3a7a3a; }
+.card-icon { font-size: 22px; margin-bottom: 8px; }
+.card-title { font-size: 13px; font-weight: 500; }
+.card-desc { font-size: 11px; color: #888; margin-top: 3px; line-height: 1.4; }
+.card-count { position: absolute; top: 10px; right: 10px; font-size: 11px; font-weight: 600; color: #8b7355; background: #f5f0e8; padding: 2px 7px; border-radius: 20px; }
+
+/* ENTRY TYPE BADGES */
+.entry-type { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: .04em; flex-shrink: 0; }
+.t-aprendizaje { background: #d4edda; color: #1a6b35; }
+.t-error { background: #fce8e8; color: #b02a2a; }
+.t-criterio { background: #dce8f8; color: #1a4a8b; }
+.t-gabinete { background: #faeeda; color: #85500b; }
+.t-obra { background: #ede8f8; color: #4a1a8b; }
+.t-habilidad { background: #e8f4e8; color: #1a6b1a; }
+.t-victoria { background: #fff3cd; color: #856404; }
+  .t-decision { background: #e8f0fe; color: #1a3a8b; }
+  .t-pendiente { background: #fce8f0; color: #8b1a4a; }
+  .pendiente-item { background: #fff; border: 1px solid #e8e5e0; border-radius: 10px; padding: 12px 14px; display: flex; align-items: flex-start; gap: 10px; transition: opacity .2s; }
+  .pendiente-item.completado { opacity: .5; }
+  .pendiente-item.completado .pend-texto { text-decoration: line-through; color: #aaa; }
+  .pend-check { width: 20px; height: 20px; border-radius: 6px; border: 2px solid #e8e5e0; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all .15s; margin-top: 2px; }
+  .pend-check:hover { border-color: #8b7355; }
+  .pend-check.done { background: #1a6b35; border-color: #1a6b35; color: #fff; }
+  .pend-body { flex: 1; min-width: 0; }
+  .pend-texto { font-size: 13px; color: #333; line-height: 1.5; word-break: break-word; }
+  .pend-date { font-size: 11px; color: #bbb; margin-top: 4px; }
+  .pend-actions { display: flex; gap: 6px; opacity: 0; transition: opacity .15s; flex-shrink: 0; }
+  .pendiente-item:hover .pend-actions { opacity: 1; }
+  .pend-empty { text-align: center; padding: 40px 20px; color: #aaa; font-size: 13px; }
+  .pend-section-label { font-size: 11px; font-weight: 600; color: #aaa; text-transform: uppercase; letter-spacing: .05em; margin: 16px 0 8px; }
+
+/* TABS */
+.tabs { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 1px solid #e8e5e0; overflow-x: auto; }
+.tab { padding: 10px 14px; font-size: 13px; cursor: pointer; border-bottom: 2px solid transparent; color: #888; white-space: nowrap; }
+.tab.active { color: #8b7355; border-bottom-color: #8b7355; font-weight: 500; }
+
+/* SECTION HEADER */
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+.section-title { font-size: 16px; font-weight: 500; }
+.header-actions { display: flex; gap: 8px; }
+.btn { padding: 7px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; transition: all .15s; }
+.btn-primary { background: #8b7355; color: #fff; }
+.btn-primary:hover { background: #7a6348; }
+.btn-ghost { background: #fff; color: #444; border: 1px solid #e8e5e0; }
+.btn-ghost:hover { border-color: #aaa; }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+.btn-danger { background: #fce8e8; color: #b02a2a; border: 1px solid #f5c6c6; }
+.btn-danger:hover { background: #f5c6c6; }
+
+/* ENTRIES */
+.entries { display: flex; flex-direction: column; gap: 10px; }
+.entry { background: #fff; border: 1px solid #e8e5e0; border-radius: 10px; padding: 14px 16px; }
+.entry-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.entry-header-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.entry-date { font-size: 11px; color: #aaa; }
+.entry-text { font-size: 13px; color: #333; line-height: 1.6; }
+.entry-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.tag { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #f5f4f0; color: #666; border: 1px solid #e8e5e0; cursor: pointer; }
+.tag:hover { border-color: #8b7355; color: #8b7355; }
+.entry-photo { margin-top: 10px; border-radius: 8px; overflow: hidden; }
+.entry-photo img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; }
+.entry-actions { display: flex; gap: 6px; opacity: 0; transition: opacity .15s; }
+.entry:hover .entry-actions { opacity: 1; }
+
+/* FORM */
+.form-panel { background: #fff; border: 1px solid #e8e5e0; border-radius: 12px; padding: 18px; margin-bottom: 20px; }
+.form-panel.hidden { display: none; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.form-group { margin-bottom: 12px; }
+.form-group label { font-size: 12px; font-weight: 500; color: #666; display: block; margin-bottom: 5px; }
+.form-group select, .form-group textarea, .form-group input[type=text], .form-group input[type=date] { width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #e8e5e0; background: #fafaf8; color: #1c1c1a; font-size: 13px; font-family: inherit; }
+.form-group textarea { resize: vertical; min-height: 90px; }
+.form-group select:focus, .form-group textarea:focus, .form-group input:focus { outline: none; border-color: #8b7355; }
+.form-actions { display: flex; gap: 8px; justify-content: flex-end; }
+.photo-preview { width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; margin-top: 8px; display: none; }
+
+/* EDIT MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay.hidden { display: none; }
+.modal { background: #fff; border-radius: 12px; padding: 20px; width: 100%; max-width: 540px; max-height: 80vh; overflow-y: auto; }
+.modal-title { font-size: 15px; font-weight: 500; margin-bottom: 16px; }
+
+/* PROVEEDORES */
+.empty-state { text-align: center; padding: 48px 20px; color: #aaa; }
+.empty-icon { font-size: 36px; margin-bottom: 12px; }
+.prov-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.prov-card { background: #fff; border: 1px solid #e8e5e0; border-radius: 10px; padding: 16px; }
+.prov-name { font-size: 14px; font-weight: 500; }
+.prov-rubro { font-size: 12px; color: #8b7355; margin-top: 2px; font-weight: 500; }
+.prov-info { font-size: 12px; color: #555; margin-top: 8px; line-height: 1.7; }
+.prov-rating { margin-top: 8px; color: #e6a817; font-size: 14px; letter-spacing: 2px; }
+
+/* PROYECTO NOTES */
+.proyecto-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.proyecto-tab { padding: 6px 14px; border-radius: 20px; font-size: 13px; cursor: pointer; border: 1px solid #e8e5e0; background: #fff; color: #666; transition: all .15s; }
+.proyecto-tab.active { background: #1c1c1a; color: #fff; border-color: #1c1c1a; }
+
+/* PDF */
+@media print {
+  .topbar, .breadcrumb, .btn, .sync-btn, .consejo-card, .entry-actions, .tabs, .form-panel { display: none !important; }
+  .container { padding: 0; }
+  .entry { break-inside: avoid; }
+}
+
+.loading { text-align: center; padding: 32px; color: #aaa; font-size: 13px; }
+.status { position: fixed; bottom: 20px; right: 20px; padding: 10px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; box-shadow: 0 4px 16px rgba(0,0,0,.15); z-index: 999; transition: opacity .3s; }
+.status.ok { background: #1a6b35; color: #fff; }
+.status.err { background: #b02a2a; color: #fff; }
+.status.info { background: #1c1c1a; color: #fff; }
+.status.hidden { opacity: 0; pointer-events: none; }
+.offline-badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #faeeda; color: #85500b; display: none; }
+.offline-badge.show { display: inline-block; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-title">📐 Bitácora Técnica — AV Group</div>
+    <div class="topbar-sub">José Ignacio, Uruguay</div>
+  </div>
+  <div class="topbar-actions">
+    <span class="offline-badge" id="offline-badge">⚡ Offline</span>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" type="text" placeholder="Buscar entradas..." id="search-input" oninput="onSearch(this.value)">
+    </div>
+    <button class="sync-btn" onclick="syncAll()">⟳ Sincronizar</button>
+    <button class="sync-btn" onclick="exportPDF()">↓ PDF</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="breadcrumb" id="breadcrumb"><span class="bc-cur">Inicio</span></div>
+
+  <!-- SEARCH RESULTS -->
+  <div class="search-results hidden" id="search-results">
+    <div class="search-results-title" id="search-results-title"></div>
+    <div class="entries" id="search-list"></div>
+  </div>
+
+  <!-- HOME -->
+  <div id="view-home">
+    <div class="consejo-card">
+      <div class="consejo-icon">💡</div>
+      <div>
+        <div class="consejo-label">Consejo del día</div>
+        <div class="consejo-text" id="consejo-text">Pedir número directo a proveedores y clientes para resolver con vos, no pasar por los jefes.</div>
+        <span class="consejo-refresh" onclick="nextConsejo()">↺ Otro consejo</span>
+      </div>
+    </div>
+
+    <div class="victorias-card" id="victorias-home" style="display:none">
+      <div class="victorias-header">
+        <div class="victorias-label">🏆 Mis victorias</div>
+        <div class="victorias-count" id="victorias-count">0</div>
+      </div>
+      <div class="victorias-list" id="victorias-list"></div>
+      <span class="ver-todas" onclick="goRubroById(&#39;victorias&#39;)">Ver todas →</span>
+    </div>
+
+    <div class="ultimas-section">
+      <div class="section-label">Últimas entradas</div>
+      <div class="ultimas-grid" id="ultimas-grid"><div class="ultima-card" onclick="goRubroById(&#39;autoconocimiento&#39;)">
+      <div class="ultima-header">
+        <span class="entry-type t-aprendizaje">aprendizaje</span>
+        <span class="ultima-rubro">Autoconocimiento</span>
+        <span class="ultima-date">2026-07-02T07:00:00.000Z</span>
+      </div>
+      <div class="ultima-text">Si  te griten que eso no altere tu bienestar interno. Tomar la critica pero focalizar en el trabajo bien hecho para no sentirte que no sirve lo que estas haciendo.</div>
+    </div><div class="ultima-card" onclick="goRubroById(&#39;gabinete_rep&#39;)">
+      <div class="ultima-header">
+        <span class="entry-type t-aprendizaje">aprendizaje</span>
+        <span class="ultima-rubro">Gabinete / Representación</span>
+        <span class="ultima-date">2026-07-02T07:00:00.000Z</span>
+      </div>
+      <div class="ultima-text">Si voy a imprimir una carpeta de para presentación, no usar colores grises claros porque la impresion no sale. el mobiliario por ej. dibujarlo casi negro.</div>
+    </div><div class="ultima-card" onclick="goRubroById(&#39;proy-NT&#39;)">
+      <div class="ultima-header">
+        <span class="entry-type t-aprendizaje">aprendizaje</span>
+        <span class="ultima-rubro">Proyecto NT</span>
+        <span class="ultima-date">2026-07-02T07:00:00.000Z</span>
+      </div>
+      <div class="ultima-text">Subir al drive maqueta sin plantas para mati</div>
+    </div><div class="ultima-card" onclick="goRubroById(&#39;climatizacion&#39;)">
+      <div class="ultima-header">
+        <span class="entry-type t-aprendizaje">aprendizaje</span>
+        <span class="ultima-rubro">Climatización › VRV</span>
+        <span class="ultima-date">2026-07-02T07:00:00.000Z</span>
+      </div>
+      <div class="ultima-text">El equipo de inyección de sistem VRV ductado va fijado con varillas roscadas a la losa</div>
+    </div><div class="ultima-card" onclick="goRubroById(&#39;proy-NT&#39;)">
+      <div class="ultima-header">
+        <span class="entry-type t-aprendizaje">aprendizaje</span>
+        <span class="ultima-rubro">Proyecto NT</span>
+        <span class="ultima-date">2026-07-02T07:00:00.000Z</span>
+      </div>
+      <div class="ultima-text">Subir al drive maqueta sin plantas para mati</div>
+    </div><div class="ultima-card" onclick="goRubroById(&#39;gestion&#39;)">
+      <div class="ultima-header">
+        <span class="entry-type t-aprendizaje">aprendizaje</span>
+        <span class="ultima-rubro">Gestión y foco</span>
+        <span class="ultima-date">2026-07-02T07:00:00.000Z</span>
+      </div>
+      <div class="ultima-text">Por mas que hagas gabinete todo el día, sali a visitar una obra por lo menos un rato en el día.</div>
+    </div></div>
+    </div>
+
+    <div class="section-label">Rubros técnicos</div>
+    <div class="grid" id="grid-rubros">
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;estructura&quot;,&quot;icon&quot;:&quot;🏗️&quot;,&quot;title&quot;:&quot;Estructura&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Hormigón, steel frame, mampostería&quot;})">
+      <div class="card-icon">🏗️</div>
+      <div class="card-title">Estructura</div>
+      <div class="card-desc">Hormigón, steel frame, mampostería</div>
+      <div class="card-count">1</div>
+    </div>
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;albanileria&quot;,&quot;icon&quot;:&quot;🧱&quot;,&quot;title&quot;:&quot;Albañilería&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Muros, revoques, contrapisos&quot;})">
+      <div class="card-icon">🧱</div>
+      <div class="card-title">Albañilería</div>
+      <div class="card-desc">Muros, revoques, contrapisos</div>
+      
+    </div>
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;impermeabilizacion&quot;,&quot;icon&quot;:&quot;💧&quot;,&quot;title&quot;:&quot;Impermeabilizaciones&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Membranas, selladores, detalles&quot;})">
+      <div class="card-icon">💧</div>
+      <div class="card-title">Impermeabilizaciones</div>
+      <div class="card-desc">Membranas, selladores, detalles</div>
+      <div class="card-count">1</div>
+    </div>
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;cubierta&quot;,&quot;icon&quot;:&quot;🏠&quot;,&quot;title&quot;:&quot;Cubierta&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Madera, chapa, losa&quot;})">
+      <div class="card-icon">🏠</div>
+      <div class="card-title">Cubierta</div>
+      <div class="card-desc">Madera, chapa, losa</div>
+      
+    </div>
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;revestimientos&quot;,&quot;icon&quot;:&quot;🪵&quot;,&quot;title&quot;:&quot;Revestimientos&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Piedra, lapacho, pórfido&quot;})">
+      <div class="card-icon">🪵</div>
+      <div class="card-title">Revestimientos</div>
+      <div class="card-desc">Piedra, lapacho, pórfido</div>
+      
+    </div>
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;carpinterias&quot;,&quot;icon&quot;:&quot;🚪&quot;,&quot;title&quot;:&quot;Carpinterías&quot;,&quot;sub&quot;:[&quot;Aluminio&quot;,&quot;Madera&quot;,&quot;PVC&quot;],&quot;desc&quot;:&quot;Aluminio, madera, PVC&quot;})">
+      <div class="card-icon">🚪</div>
+      <div class="card-title">Carpinterías</div>
+      <div class="card-desc">Aluminio, madera, PVC</div>
+      
+    </div>
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;sanitarias&quot;,&quot;icon&quot;:&quot;🔧&quot;,&quot;title&quot;:&quot;Inst. Sanitarias&quot;,&quot;sub&quot;:[&quot;Agua fría&quot;,&quot;Agua caliente&quot;,&quot;Cloacal&quot;,&quot;Pluvial&quot;],&quot;desc&quot;:&quot;Agua, cloacas, pluvial&quot;})">
+      <div class="card-icon">🔧</div>
+      <div class="card-title">Inst. Sanitarias</div>
+      <div class="card-desc">Agua, cloacas, pluvial</div>
+      
+    </div>
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;electrica&quot;,&quot;icon&quot;:&quot;⚡&quot;,&quot;title&quot;:&quot;Inst. Eléctrica&quot;,&quot;sub&quot;:[&quot;Luminarias&quot;,&quot;Fuerza&quot;,&quot;Alarma / cámaras&quot;,&quot;Corrientes débiles&quot;,&quot;Audio&quot;],&quot;desc&quot;:&quot;Luminarias, fuerza, audio...&quot;})">
+      <div class="card-icon">⚡</div>
+      <div class="card-title">Inst. Eléctrica</div>
+      <div class="card-desc">Luminarias, fuerza, audio...</div>
+      
+    </div>
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;climatizacion&quot;,&quot;icon&quot;:&quot;🌡️&quot;,&quot;title&quot;:&quot;Climatización&quot;,&quot;sub&quot;:[&quot;VRV&quot;,&quot;Losa radiante por agua&quot;,&quot;Losa radiante eléctrica&quot;],&quot;desc&quot;:&quot;VRV, losa radiante&quot;})">
+      <div class="card-icon">🌡️</div>
+      <div class="card-title">Climatización</div>
+      <div class="card-desc">VRV, losa radiante</div>
+      <div class="card-count">1</div>
+    </div>
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;paisajismo&quot;,&quot;icon&quot;:&quot;🌿&quot;,&quot;title&quot;:&quot;Paisajismo&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Vegetación, riego, iluminación&quot;})">
+      <div class="card-icon">🌿</div>
+      <div class="card-title">Paisajismo</div>
+      <div class="card-desc">Vegetación, riego, iluminación</div>
+      
+    </div>
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;gabinete_rep&quot;,&quot;icon&quot;:&quot;✏️&quot;,&quot;title&quot;:&quot;Gabinete / Representación&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;CAD, SketchUp, renders, presentaciones&quot;})">
+      <div class="card-icon">✏️</div>
+      <div class="card-title">Gabinete / Representación</div>
+      <div class="card-desc">CAD, SketchUp, renders, presentaciones</div>
+      <div class="card-count">1</div>
+    </div>
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;proveedores&quot;,&quot;icon&quot;:&quot;👥&quot;,&quot;title&quot;:&quot;Proveedores&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Contactos y calificaciones&quot;,&quot;special&quot;:&quot;prov&quot;})">
+      <div class="card-icon">👥</div>
+      <div class="card-title">Proveedores</div>
+      <div class="card-desc">Contactos y calificaciones</div>
+      
+    </div></div>
+
+    <div class="section-label" style="margin-top:8px">Habilidades blandas</div>
+    <div class="grid" id="grid-soft">
+    <div class="card card-soft" onclick="goRubro({&quot;id&quot;:&quot;comunicacion&quot;,&quot;icon&quot;:&quot;💬&quot;,&quot;title&quot;:&quot;Comunicación&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Con jefes, clientes, proveedores&quot;})">
+      <div class="card-icon">💬</div>
+      <div class="card-title">Comunicación</div>
+      <div class="card-desc">Con jefes, clientes, proveedores</div>
+      
+    </div>
+    <div class="card card-soft" onclick="goRubro({&quot;id&quot;:&quot;gestion&quot;,&quot;icon&quot;:&quot;📋&quot;,&quot;title&quot;:&quot;Gestión y foco&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Prioridades, tiempo, productividad&quot;})">
+      <div class="card-icon">📋</div>
+      <div class="card-title">Gestión y foco</div>
+      <div class="card-desc">Prioridades, tiempo, productividad</div>
+      <div class="card-count">2</div>
+    </div>
+    <div class="card card-soft" onclick="goRubro({&quot;id&quot;:&quot;liderazgo&quot;,&quot;icon&quot;:&quot;🎯&quot;,&quot;title&quot;:&quot;Liderazgo&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Dirección de obra, decisiones&quot;})">
+      <div class="card-icon">🎯</div>
+      <div class="card-title">Liderazgo</div>
+      <div class="card-desc">Dirección de obra, decisiones</div>
+      
+    </div>
+    <div class="card card-soft" onclick="goRubro({&quot;id&quot;:&quot;autoconocimiento&quot;,&quot;icon&quot;:&quot;🧠&quot;,&quot;title&quot;:&quot;Autoconocimiento&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Ansiedad, confianza, errores&quot;})">
+      <div class="card-icon">🧠</div>
+      <div class="card-title">Autoconocimiento</div>
+      <div class="card-desc">Ansiedad, confianza, errores</div>
+      <div class="card-count">1</div>
+    </div>
+    <div class="card card-soft" onclick="goRubro({&quot;id&quot;:&quot;victorias&quot;,&quot;icon&quot;:&quot;🏆&quot;,&quot;title&quot;:&quot;Victorias&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Logros y hitos profesionales&quot;,&quot;special&quot;:&quot;victorias&quot;})">
+      <div class="card-icon">🏆</div>
+      <div class="card-title">Victorias</div>
+      <div class="card-desc">Logros y hitos profesionales</div>
+      <div class="card-count">1</div>
+    </div></div>
+
+    <div class="section-label" style="margin-top:8px">Proyectos</div>
+    <div class="grid" id="grid-proyectos">
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;proy-EV&quot;,&quot;icon&quot;:&quot;🏡&quot;,&quot;title&quot;:&quot;Proyecto EV&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;José Ignacio&quot;,&quot;special&quot;:&quot;proyecto&quot;})">
+      <div class="card-icon">🏡</div>
+      <div class="card-title">Proyecto EV</div>
+      <div class="card-desc">José Ignacio</div>
+    </div>
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;proy-NT&quot;,&quot;icon&quot;:&quot;🏡&quot;,&quot;title&quot;:&quot;Proyecto NT&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;José Ignacio&quot;,&quot;special&quot;:&quot;proyecto&quot;})">
+      <div class="card-icon">🏡</div>
+      <div class="card-title">Proyecto NT</div>
+      <div class="card-desc">José Ignacio</div>
+    </div>
+    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;proy-RI&quot;,&quot;icon&quot;:&quot;🔨&quot;,&quot;title&quot;:&quot;Reforma RI&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Dirección de obra&quot;,&quot;special&quot;:&quot;proyecto&quot;})">
+      <div class="card-icon">🔨</div>
+      <div class="card-title">Reforma RI</div>
+      <div class="card-desc">Dirección de obra</div>
+    </div></div>
+  </div>
+
+  <!-- SUB -->
+  <div id="view-sub" style="display:none"><div class="grid" id="grid-subs"></div></div>
+
+  <!-- ENTRIES -->
+  <div id="view-entries" style="display:none">
+    <div class="tabs" id="tabs-bar"></div>
+    <div class="section-header">
+      <div class="section-title" id="entries-title"></div>
+      <div class="header-actions">
+        <button class="btn btn-ghost btn-sm" onclick="exportPDF()">↓ PDF</button>
+        <button class="btn btn-primary" onclick="toggleForm()">＋ Agregar</button>
+      </div>
+    </div>
+    <div class="form-panel hidden" id="entry-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tipo</label>
+          <select id="f-tipo">
+            <option value="aprendizaje">Aprendizaje</option>
+            <option value="error">Error</option>
+            <option value="criterio">Criterio</option>
+            <option value="gabinete">Gabinete</option>
+            <option value="obra">Obra</option>
+            <option value="habilidad">Habilidad blanda</option>
+            <option value="victoria">Victoria</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date" id="f-fecha">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Contenido</label>
+        <textarea id="f-texto" placeholder="Describí el aprendizaje, error o criterio..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Tags (separados por coma)</label>
+        <input type="text" id="f-tags" placeholder="ej: hormigón, junta, detalle">
+      </div>
+      <div class="form-group">
+        <label>Foto (opcional — pegá la URL de una imagen de Drive o web)</label>
+        <input type="text" id="f-foto" placeholder="https://..." oninput="previewFoto(this.value)">
+        <img id="foto-preview" class="photo-preview">
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="toggleForm()">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveEntry()">Guardar</button>
+      </div>
+    </div>
+    <div class="entries" id="entries-list"></div>
+  </div>
+
+  <!-- PROVEEDORES -->
+  <div id="view-proveedores" style="display:none">
+    <div class="section-header">
+      <div class="section-title">Proveedores y contactos</div>
+      <button class="btn btn-primary" onclick="toggleProvForm()">＋ Agregar</button>
+    </div>
+    <div class="form-panel hidden" id="prov-form">
+      <div class="form-row">
+        <div class="form-group"><label>Empresa / Persona</label><input type="text" id="p-nombre" placeholder="Nombre"></div>
+        <div class="form-group"><label>Rubro</label><input type="text" id="p-rubro" placeholder="ej: Carpintería aluminio"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Contacto</label><input type="text" id="p-contacto" placeholder="Nombre del referente"></div>
+        <div class="form-group"><label>Teléfono</label><input type="text" id="p-tel" placeholder="+598..."></div>
+      </div>
+      <div class="form-group"><label>Notas</label><textarea id="p-notas" style="min-height:60px" placeholder="Tiempo de entrega, calidad, observaciones..."></textarea></div>
+      <div class="form-group">
+        <label>Calificación</label>
+        <select id="p-rating">
+          <option value="5">★★★★★ Excelente</option>
+          <option value="4">★★★★☆ Muy bueno</option>
+          <option value="3">★★★☆☆ Regular</option>
+          <option value="2">★★☆☆☆ Malo</option>
+          <option value="1">★☆☆☆☆ Muy malo</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="toggleProvForm()">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveProv()">Guardar</button>
+      </div>
+    </div>
+    <div class="prov-grid" id="prov-list"></div>
+  </div>
+
+  <!-- NOTAS DE PROYECTO -->
+  <div id="view-proyecto" style="display:none">
+    <div class="section-header">
+      <div class="section-title" id="proyecto-title">Pendientes</div>
+      <button class="btn btn-primary" onclick="toggleFormProy()">＋ Pendiente</button>
+    </div>
+    <div class="form-panel hidden" id="entry-form-proy">
+      <div class="form-group">
+        <label>Pendiente</label>
+        <textarea id="fp-texto" placeholder="Describí el pendiente o tarea..."></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-ghost" onclick="toggleFormProy()">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveEntryProy()">Agregar</button>
+      </div>
+    </div>
+    <div id="pendientes-list"></div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay hidden" id="edit-modal">
+  <div class="modal">
+    <div class="modal-title">Editar entrada</div>
+    <input type="hidden" id="edit-row-idx">
+    <div class="form-group"><label>Tipo</label>
+      <select id="edit-tipo">
+        <option value="aprendizaje">Aprendizaje</option>
+        <option value="error">Error</option>
+        <option value="criterio">Criterio</option>
+        <option value="gabinete">Gabinete</option>
+        <option value="obra">Obra</option>
+        <option value="habilidad">Habilidad blanda</option>
+        <option value="victoria">Victoria</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Contenido</label><textarea id="edit-texto" style="min-height:120px"></textarea></div>
+    <div class="form-group"><label>Tags</label><input type="text" id="edit-tags"></div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="closeEdit()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveEdit()">Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+<div class="status hidden" id="toast"></div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxFbhcRd4CgV0Zu7amkSep6FuAL0xd_3H0N-9NlDE8ZBDc-XJLbKlaBzm_6SR3S9Zf3/exec';
+const OFFLINE_KEY = 'bitacora_offline_queue';
+
+const CONSEJOS = [
+  "Antes de tomar una decisión en obra: ¿cuál es el peor escenario si me equivoco, y tiene solución? Si sí, decidí y avanzá.",
+  "Nunca ir a una reunión sin un checklist mental de qué información necesitás llevar.",
+  "Cuando te pidan algo, siempre aportar algo más. No cerrarte solo a lo que te piden.",
+  "Si te tiran muchas tareas juntas: primero tomar nota de todo, después resolver de a una.",
+  "Siempre trabajar con fechas anticipadas — 'lo necesito para X' = 3 o 4 días antes del límite real.",
+  "No enviar un trabajo rápido y mal. Rechequear mínimo 3 veces antes de mandar.",
+  "No confiar ciegamente en proveedores — siempre cuestionar y repasar cómputos.",
+  "Pedir número directo a proveedores y clientes para resolver con vos, no pasar por los jefes.",
+  "Cuando resolvés algo importante, comunicarlo brevemente hacia arriba — qué decidí y por qué.",
+  "La confianza no viene antes de la competencia. Con cada decisión que tomás solo, construís criterio.",
+  "Anticiparse es la habilidad que más te diferencia. Cada viernes: ¿qué va a hacer falta la semana que viene?",
+  "El error no es el final. Lo que no se puede corregir es la parálisis.",
+  "Separar urgente de importante. En obra todo parece urgente — pero no todo lo es.",
+  "No tender a pensar 'esto es todo mi culpa'. Identificar el problema, las causas y las posibles soluciones.",
+  "Trabajar las horas que corresponden y descansar el resto genera mejores decisiones que trabajar 12hs sin foco.",
+  "Toda corrección a proveedores o dibujantes: por escrito. Nada de correcciones verbales sin registro.",
+  "Sobredimensionar siempre los desagües pluviales en balcones y terrazas.",
+  "Antes de cerrar cualquier cubierta: prueba con manguera para verificar estanqueidad.",
+  "En reformas, siempre asentar por escrito detalles de muebles y decisiones tomadas.",
+  "Cuando tenés vigas invertidas, chequear tomas bajos, cañería de agua, caños eléctricos y de AC.",
+  "Juan valora cuando te adelantás a la jugada. No esperés que te pidan algo que sabés que va a hacer falta.",
+  "Cada mail con Juan en copia es visibilidad de tu trabajo sin tener que reportarlo explícitamente.",
+  "Las victorias se documentan igual que los errores. Si no las registrás, no podés releerlas cuando las necesitás.",
+  "El criterio proyectual se construye viendo antecedentes y teniendo tiempo de gabinete sin interrupciones.",
+  "La autoestima profesional no se construye evitando errores — se construye aprendiendo a separar el error del valor.",
+];
+
+
+const IA_CONOCIMIENTOS = {"estructura": ["La resistencia minima especificada para hormigon estructural en edificacion es fc = 21 MPa (214 kg/cm2). Para ambientes agresivos o marinos, aumentar a minimo 28-35 MPa.", "El recubrimiento minimo de las armaduras varia segun exposicion: 20mm en interior seco, 25mm en exterior normal, 40mm en ambiente marino o con contacto directo de suelo.", "El curado del hormigon debe iniciarse inmediatamente despues del vibrado y mantenerse humedo al menos 7 dias en condiciones normales, 14 dias en climas calidos o secos.", "La relacion agua/cemento es el factor mas determinante de la resistencia y durabilidad. Para ambientes marinos como Jose Ignacio, no superar 0.45 w/c.", "Antes de hormigonar columnas y vigas, verificar que el encofrado este limpio, humedo y sin restos de aserrin. Cualquier impureza genera planos de debilidad.", "Los empalmes de armaduras no deben ubicarse en zonas de maximo momento flector. La longitud minima de empalme por solape es 60 veces el diametro de la barra.", "El vibrado del hormigon debe realizarse cada 50cm en columnas y muros, sin tocar las armaduras. El exceso de vibrado provoca segregacion y nidos de grava.", "En losas, la pendiente minima para evacuacion pluvial es del 1.5-2%. Una losa plana sin pendiente genera acumulacion de agua y deterioro prematuro.", "Las columnas de hormigon deben hormigonarse en una sola colada sin interrupciones. Las juntas frias son planos de debilidad estructural y deben evitarse.", "Para estructuras expuestas a ambiente marino, usar cemento con bajo contenido de aluminato tricalcico (C3A) y aditivos inhibidores de corrosion en las armaduras.", "El acero de refuerzo corrugado debe tener fy mayor o igual 420 MPa. Antes de colocarlo, verificar que no tenga oxido suelto, grasa ni recubrimientos que afecten la adherencia.", "La resistencia del hormigon se evalua con probetas cilindricas de 15x30cm ensayadas a los 28 dias. No aceptar hormigon que no cumpla el 85% de la resistencia a los 7 dias.", "En reformas sobre estructura existente, nunca asumir la resistencia del hormigon original. Extraccion de testigos o esclerometria antes de proyectar nuevas cargas.", "Los estribos en columnas deben ser cerrados y con patillas a 135 grados. El gancho recto a 90 grados es una deficiencia grave de confinamiento ante cargas sismicas.", "Siempre dejar juntas de dilatacion cada 20-25m en estructuras largas. Sin juntas, las dilataciones termicas generan fisuras que no tienen solucion posterior sin demoler.", "El tiempo maximo entre la fabricacion del hormigon y su puesta en obra no debe superar 90 minutos. Pasado ese tiempo, la hidratacion del cemento compromete la resistencia.", "Para verificar la horizontalidad de losas y encofrados usar nivel laser antes de hormigonar. Un desnivel de 1cm en una losa de 10m genera problemas de desague y terminacion.", "El acero estructural expuesto en ambientes marinos requiere proteccion galvanica, pinturas epoxi o inoxidable. El acero negro sin proteccion en zona costera se corroe en 2-3 anios."], "albanileria": ["Los ladrillos ceramicos deben humedecerse antes de su colocacion. Un ladrillo seco absorbe el agua del mortero y produce juntas debiles y sin adherencia.", "El mortero de asiento estandar para mamposteria es 1:3 (cemento:arena). Para revoques exteriores expuestos usar 1:4 con aditivo hidrofugo incorporado.", "Las juntas de mamposteria deben tener entre 10 y 15mm de espesor y estar completamente llenas. Las juntas secas o vacias reducen hasta un 40% la resistencia del muro.", "Los tabiques de ladrillo ceramico hueco no son elementos estructurales. Nunca apoyar cargas de losa o viga directamente sobre ellos sin viga o dintel previo.", "En muros de mas de 3m de altura o 6m de longitud, colocar columnas de amarre de hormigon armado cada 3m para evitar el pandeo y las fisuras por temperatura.", "El contrapiso de hormigon pobre (H-8, 1:3:6) debe tener un espesor minimo de 8cm sobre terreno compactado. Con menos espesor fisura y transfiere humedad ascendente.", "Para revoques exteriores, aplicar siempre en dos capas: jaharro (base rugosa 15mm) y enlucido (terminacion 5mm). Una sola capa gruesa fisura por retraccion.", "Los dinteles sobre vanos deben apoyar minimo 20cm a cada lado del vano. Un apoyo insuficiente genera fisuras diagonales en las esquinas superiores de las aberturas.", "La mamposteria de ladrillo visto requiere juntas tomadas con mortero de cal para permitir respiracion del muro. Las juntas de cemento puro impiden la migracion de humedad.", "En tabiques de yeso o durlock, la separacion maxima entre montantes es 400mm para placas simples y 600mm para doble placa. Mayor separacion produce deflexion visible.", "Los contrapisos sobre terreno siempre requieren barrera de vapor (polietileno 200 micrones) antes del hormigon para evitar humedad ascendente por capilaridad.", "Los bloques de cemento para tabiques de contencion deben rellenarse con hormigon y armadura vertical cada 60cm. Sin relleno, el bloque trabaja solo en compresion.", "El mortero de cemento fraguado no debe rehidratarse con agua. Si pierde trabajabilidad, descartarlo. Agregar agua despues del inicio de fraguado elimina la resistencia final.", "En revoques sobre superficies muy absorbentes o muy lisas, aplicar siempre un puente de adherencia o imprimacion previa.", "La temperatura minima para trabajar con morteros de cemento es 5 grados C. Por debajo el fraguado se detiene y el mortero puede perder resistencia permanentemente.", "Los muros de mamposteria expuestos al sol generan dilataciones de hasta 1mm/m lineal por diferencia termica. Sin juntas de movimiento, la fisura es inevitable.", "El ladrillo de campo o artesanal tiene resistencia variable e impredecible. Para elementos estructurales solo usar ladrillo ceramico o de cemento de produccion industrial certificada.", "En obras de reforma, verificar siempre la humedad del muro existente antes de revocar encima. La humedad atrapada bajo el revoque nuevo genera eflorescencias y desprendimientos."], "impermeabilizacion": ["La pendiente minima para impermeabilizacion de cubiertas planas es 1.5-2%. Con menos pendiente el agua se acumula y acelera el deterioro de cualquier sistema de membrana.", "Los puntos singulares (sumideros, encuentros con paramentos, perforaciones) concentran el 80% de las filtraciones. Siempre resolver con refuerzos adicionales de membrana.", "La membrana impermeable en encuentro con paramento vertical debe subir minimo 20cm sobre el nivel del pavimento terminado. Con menos altura el agua bordea el remate.", "Los sumideros deben ubicarse a minimo 50cm del peto mas proximo y 1m de las esquinas para facilitar la ejecucion del refuerzo y evitar contrapendientes.", "Antes de aplicar cualquier sistema de impermeabilizacion, realizar prueba de estanqueidad por inundacion durante 24-48 horas. Es la unica forma de verificar la eficacia real.", "El sustrato sobre el que se aplica la membrana debe estar limpio, seco y sin irregularidades mayores a 5mm. Una superficie con polvo o humedad elimina la adherencia.", "Las membranas asfalticas con soldadura a llama deben tener solapes minimos de 10cm longitudinales y 15cm transversales, completamente sellados sin burbujas de aire.", "En cubiertas invertidas el aislamiento va sobre la membrana impermeable, protegiendola de cambios termicos. En cubierta caliente el aislamiento va debajo.", "Las juntas estructurales del edificio deben tratarse con sistemas especiales de junta que permitan el movimiento diferencial sin romper la impermeabilizacion.", "Para muros en contacto con terreno, usar membrana bituminosa mas geocompuesto drenante en el trasdos. Sin drenaje, la presion hidrostatica vence cualquier membrana.", "Las membranas de PVC, TPO y EPDM requieren soldadura por calor o adhesivos especiales en las uniones. No pueden soldarse a llama como las asfalticas.", "En cubiertas con cubierta verde, la membrana debe ser antiraices certificada. Las raices de vegetacion penetran cualquier membrana convencional en 3-5 anios.", "La proteccion de la membrana debe colocarse lo antes posible despues de su aplicacion. La exposicion UV degrada las membranas asfalticas en meses.", "En balcones y terrazas, sobredimensionar los desagues pluviales y colocar sumidero de emergencia. Una obstruccion en cubierta plana puede colapsar la losa.", "La impermeabilizacion de duchas y banos humedo debe subir minimo 30cm en paredes. El borde inferior del revestimiento no es suficiente barrera contra la humedad.", "Los selladores de poliuretano y silicona tienen vida util de 8-12 anios en exterior. Las juntas de dilatacion y perimetrales requieren inspeccion y reposicion periodica.", "Nunca impermeabilizar sobre membrana existente deteriorada sin retirarla. La adherencia sobre sustrato degradado es nula y el sistema nuevo falla en meses.", "En zona costera como Jose Ignacio, las membranas liquidas de poliuretano tienen mejor comportamiento que las asfalticas por su elasticidad ante ciclos termicos amplios."], "cubierta": ["La pendiente minima para chapa acanalada de acero galvanizado es 5% (3 grados). Para chapa trapezoidal tipo sandwich puede reducirse a 3%, pero nunca menos.", "Las chapas de cubierta en zona costera deben ser zincalum o galvanizada prepintada con minimo 275g/m2 de zinc. El acero negro sin proteccion se perfora en 3-5 anios.", "Los faldones de madera requieren ventilacion bajo la chapa con camara de aire minima de 5cm para evitar la acumulacion de condensacion que pudre la estructura.", "La madera estructural en cubierta debe tener un contenido de humedad menor al 19% antes de su colocacion. Madera verde genera deformaciones y perdida de resistencia.", "Los cabios o costaneras secundarios deben atornillarse, no clavarse. Los clavos se sueltan con el movimiento termico de la cubierta y generan filtraciones en los puntos de fijacion.", "Los solapes longitudinales de chapas onduladas deben ser minimo de 1.5 ondas (aprox. 20cm). Con menos solape, el viento puede levantar el agua por capilaridad entre chapas.", "Las limahoyas (encuentros entre dos faldones) son el punto mas critico de una cubierta inclinada. Deben impermeabilizarse con chapa de zinc o membrana antes de colocar la terminacion.", "En cubiertas de madera vista (lambriz), el espacio entre la chapa y el lambriz debe ventilar al exterior para evitar condensacion. Sin ventilacion, el lambriz se pudre desde adentro.", "Los canalones deben tener una caida minima del 0.5% hacia las bajadas pluviales. Un canalon plano acumula agua, genera oxido y produce desbordamientos en tormentas.", "Las bajadas pluviales deben dimensionarse por superficie de cubierta: 1cm2 de seccion de cano por cada 1m2 de cubierta en zona de lluvias moderadas; duplicar en zona costera.", "El zinc natural para canalones y remates tiene una vida util de 50-80 anios en ambiente urbano, pero se reduce a 20-30 anios en ambiente marino por accion del cloruro.", "Para cubiertas a 4 aguas, el nudo de cumbrera y los limatesos son los puntos tecnicamente mas complejos. Deben resolverse en detalle en el proyecto antes de la ejecucion.", "Las tejas ceramicas o de hormigon deben fijarse mecanicamente en faldones con pendiente mayor al 40% o en zonas de viento fuerte. El peso solo no es suficiente anclaje.", "La impermeabilizacion bajo chapa (membrana hidrofuga tipo Tyvek) debe colocarse con la cara transpirable hacia afuera para permitir la salida del vapor de agua interior.", "En cubiertas planas transitables, el pavimento flotante sobre soportes regulables permite acceso para mantenimiento sin perforar la membrana impermeabilizante.", "El peso del sustrato de cubierta verde varia entre 80-200 kg/m2 saturado. Siempre verificar con el ingeniero antes de proyectar vegetacion sobre una losa existente.", "Los faldones de chapa de mas de 10m de largo requieren juntas de dilatacion intermedias. Sin juntas, las fuerzas de dilatacion arrancan los tornillos de fijacion.", "En zonas con granizo frecuente, la chapa debe tener espesor minimo de 0.6mm (calibre 24). Chapas mas delgadas se danian permanentemente con granizo fuerte."], "revestimientos": ["Las placas de porcellanato y porfido deben colocarse con adhesivo de cementita flexible (C2) cuando van sobre losa o calefaccion radiante. El adhesivo rigido agrieta las juntas.", "Las juntas de movimiento en pisos ceramicos deben colocarse cada 3-4m en interior y cada 2-3m en exterior. Si no las proyectas, el piso las genera solo.", "El lapacho y maderas duras para deck exterior deben tener una separacion minima de 5mm entre tablas para drenaje del agua. La madera sin separacion retiene humedad y pudre.", "El revestimiento de piedra natural en fachada debe fijarse mecanicamente con grapas de acero inoxidable para piezas mayores a 40x40cm. El adhesivo solo no garantiza la seguridad.", "Los revestimientos de madera en interior requieren un periodo de aclimatacion de 48-72 horas en el ambiente donde se colocaran antes de su instalacion para evitar alabeos.", "El porcellanato rectificado solo puede colocarse sobre superficies perfectamente planas. Una variacion de 3mm en 2m genera diferencias visibles en el plano.", "Las ceramicas y porcellanatos en banos y cocinas deben rejuntarse con mortero flexible en las juntas perimetrales. El mortero rigido perimetral agrieta.", "La madera maciza para pisos interiores se dilata y contrae hasta 2mm por metro de ancho por variacion de humedad. Siempre dejar separacion perimetral de 8-10mm.", "El piso de microcemento requiere una imprimacion especifica antes de su aplicacion y minimo 3 capas de sellador final. Sin sellador, es poroso y se mancha permanentemente.", "La piedra natural caliza y el marmol son sensibles a los acidos. Nunca usar limpiadores con base acida como vinagre o cloro. Degradan el acabado superficial de forma irreversible.", "El revestimiento exterior de lapacho requiere tratamiento previo con aceite o tinte penetrante, no pintura de film. La pintura en madera exterior ampolla y descasca en 2-3 anios.", "Las placas de alucobon o panel composite para revestimiento de fachada deben dejarse con juntas de al menos 6mm para absorber la dilatacion termica del aluminio.", "El revoque a la tirolesa o proyectado no admite correcciones parciales. Cualquier reparacion puntual se nota. Planificar siempre la terminacion del pano completo de una vez.", "El estuco veneciano interior no puede aplicarse sobre superficies con humedad. Requiere que el soporte tenga menos del 3% de humedad y temperatura ambiente estable.", "Los revestimientos ceramicos sobre yeso o durlock requieren adhesivo especifico tipo D2 o D3. El adhesivo cementicio convencional no adhiere correctamente sobre superficies de yeso.", "El canto de la pieza de revestimiento expuesto en esquinas exteriores es fragil. Usar siempre cantonera metalica o piezas especiales de esquina para proteger el filo.", "La grava decorativa o granillo de marmol en pisos de terraza humeda debe tener granulometria de 15-25mm. Las piedras pequenas se desplazan y generan riesgo de caida.", "Para revestimientos exteriores sobre steel frame, siempre colocar membrana hidrofuga y malla metal lath antes del estuco. Sin malla, el estuco no tiene adherencia mecanica."], "carpinterias": ["Las aberturas de aluminio en zona costera deben ser de aleacion 6063-T5 con tratamiento de anodizado minimo 20 micrones o lacado al horno. El aluminio sin tratamiento se oxida.", "El doble vidriado hermetico (DVH) reduce la transmitancia termica del vidrio de 5.8 a 2.8 W/m2K. En climas calidos usar vidrio reflectante para reducir ganancia solar.", "Los perfiles de aluminio en fachada de viento fuerte deben calcularse estructuralmente. Un perfil mal dimensionado deflecta mas de L/200 y puede romper el vidrio en tormentas.", "El oscilo-batiente de aluminio tiene un ancho maximo de hoja de 60cm. Hojas mas anchas generan esfuerzo excesivo en la herraje y se deforman con el tiempo.", "Las juntas perimetrales entre carpinteria y muro deben sellarse con espuma de poliuretano expansiva por dentro y sellador de poliuretano por fuera. Solo silicona exterior no es suficiente.", "Los umbrales de puertas exteriores de aluminio deben tener ruptura de puente termico para evitar condensacion. El aluminio conduce el calor 200 veces mas que la madera.", "Las corredizas de aluminio no son estancas al agua en lluvias con viento. Para zonas de alta exposicion, especificar aberturas de proyecto con rotura de puente termico y certificacion.", "El vidrio templado es obligatorio en panos fijos a baja altura (menos de 60cm del piso), puertas de vidrio y barandas. El vidrio comun al romperse genera cortes graves.", "Los herrajes de acero inoxidable en zona costera deben ser calidad 316 (marino). El inoxidable 304 estandar se mancha y corroe en ambiente marino.", "Las puertas de madera maciza en exterior deben protegerse en los cantos superior e inferior con sellador. La madera absorbe agua por los cantos desprotegidos y se deforma.", "El juego minimo entre hoja y marco de una puerta de madera es 2mm en frio. En zonas humedas aumentar a 3-4mm para compensar la dilatacion de la madera.", "Los placares de MDF o melamina no son aptos para ambiente humedo sin tratamiento especial. En banos y cocinas usar MDF hidrofugo o tablero marino.", "Los perfiles de PVC tienen mayor dilatacion termica que el aluminio. En fachadas orientadas al norte o con alta exposicion solar, el PVC puede deformarse.", "El vidrio de control solar reduce hasta un 60% la ganancia de calor solar. En climas como Uruguay con verano intenso, su uso reduce significativamente el consumo de AC.", "Las bisagras de puertas pesadas (mas de 40kg) requieren como minimo 3 bisagras de 4 pulgadas. Con 2 bisagras el peso genera torsion en el marco y dificulta el cierre.", "Los selladores de silicona en carpinterias tienen vida util de 8-10 anios. Pasado ese tiempo se agrietan y permiten la entrada de agua. Incluir revision periodica en plan de mantenimiento.", "En aberturas de madera exterior, nunca aplicar pintura sin lijado previo y con imprimacion. La pintura sobre madera sin imprimacion descasca en menos de 2 anios.", "Las corredizas de PVC para aberturas interiores tienen carga maxima de 80kg por hoja. Hojas mas pesadas requieren sistema de rodamiento reforzado."], "sanitarias": ["Las canerias de agua fria y caliente nunca deben ir en el mismo canal sin separacion. El calor de la caneria caliente calienta el agua fria en epocas de alta temperatura.", "La presion minima de red para funcionamiento de artefactos sanitarios es 10 m.c.a. (1 bar). Con menos presion, duchas y llaves mezcladoras de termostato no funcionan correctamente.", "Los termotanques electricos de acero tienen una vida util de 8-12 anios en agua calcarea. El anodo de magnesio protector debe reemplazarse cada 3-5 anios para evitar corrosion interna.", "La pendiente minima de canerias de desague cloacal es del 1-2% (1-2cm por metro lineal). Con menos pendiente los solidos no fluyen y generan obstrucciones recurrentes.", "Las canerias de PVC para desague cloacal no deben tener cambios de direccion bruscos a 90 grados. Usar siempre codos a 45 grados o dos codos en serie para facilitar el flujo.", "El esquema sanitario vertical para presentacion municipal debe incluir agua fria, agua caliente y desague cloacal. El error mas comun es olvidar el agua caliente en el esquema.", "Los desagues pluviales deben calcularse por superficie de techo. En zona de lluvias intensas, usar 1.5cm2 de seccion de bajada por cada m2 de cubierta como minimo.", "Las bocas de acceso para limpieza de canerias cloacales deben ubicarse en cada cambio de direccion y cada 15m de tramo recto. Sin accesos, la limpieza requiere rotura.", "Las canerias de agua caliente en tramos largos (mas de 10m) generan espera de agua caliente molesta. Especificar recirculacion de agua caliente en proyectos de vivienda de calidad.", "El sellado de canerias en losa con espuma de poliuretano no es suficiente para aislacion acustica. Usar manga aislante de lana mineral alrededor de la caneria antes de hormigonar.", "Los inodoros suspendidos requieren un cisterna empotrada de alta resistencia certificada. La cisterna estandar no soporta el peso dinamico de uso intensivo.", "Las griferia termostaticas regulan la temperatura de salida independientemente de variaciones de presion en red. Son obligatorias en duchas de uso residencial de alto estandar.", "El agua caliente para uso sanitario debe mantenerse a minimo 60 grados C en el termotanque para evitar la proliferacion de la bacteria Legionella, potencialmente peligrosa.", "Las canerias de polietileno (PE-X o multicapa) para agua caliente tienen mejor comportamiento que el cobre en agua con cloro. El cloro degrada el cobre en zonas con alto tratamiento.", "Los desagues de balcones y terrazas deben dimensionarse generosamente y nunca conectarse a canerias que pasen por dentro de placares o espacios cerrados.", "Para el calculo del tanque de reserva, estimar 200 litros por persona por dia en vivienda permanente. En vivienda de veraneo con piscina, duplicar el volumen.", "Las canerias de gas no deben empotrarse en muros sin vaina de proteccion y sellado perimetral. Una fuga en caneria empotrada puede ser indetectable por meses.", "El venteo de la columna cloacal debe salir al exterior por encima de la cubierta, a minimo 50cm de cualquier abertura. Sin venteo, los sifones de los artefactos se vacian por depresion."], "electrica": ["Los circuitos de iluminacion y tomas de corriente deben ir separados. Mezclarlos sobrecarga el circuito y dificulta la localizacion de fallas sin dejar todo el ambiente sin luz.", "La seccion minima de conductor para circuitos de iluminacion es 1.5mm2. Para tomas de corriente 2.5mm2. Para circuitos de cocina y AC, minimo 4mm2.", "Los tomacorrientes de exteriores y banos deben ser con tapa estanca IP44 minimo y protegidos por disyuntor diferencial de 30mA. El diferencial salva vidas en contacto con agua.", "La altura estandar de tomacorrientes es 0.30m del piso. En cocinas sobre mesada 1.10m. En dormitorios puede subirse a 0.45m para mayor accesibilidad.", "Cada circuito de AC requiere un circuito dedicado con proteccion termomagnetica dimensionada al equipo. Nunca compartir circuito de AC con otros artefactos.", "Las tiras LED calidas para interior deben ser de minimo 2700K. Las de 3000K dan luz mas fria que puede percibirse como artificial. Para exteriores se puede usar hasta 4000K.", "El control domotico de iluminacion requiere conductores adicionales para el neutro de retorno en cada interruptor. Prever este conductor en la instalacion aunque no se instale domotica aun.", "La potencia instalada minima para una vivienda de 150m2 bien equipada es 8000W. Para viviendas con AC central, piscina y cocina electrica, calcular minimo 15000-20000W.", "Los tableros electricos deben ubicarse en lugar accesible, ventilado y seco. No empotrar tableros en cocinas, banos ni depositos. La humedad dania los componentes.", "La iluminacion subacuatica de piscinas debe ser de muy baja tension (12V) o LED con clasificacion IP68. La tension de red (220V) en piscina es riesgo mortal.", "Los pararrayos son obligatorios en edificios altos o aislados en campo. En zona costera con tormentas frecuentes, verificar la necesidad segun las normas locales vigentes.", "El circuito de cocina debe incluir al menos 4 circuitos independientes: anafe, horno, lavavajillas y tomas auxiliares. Un solo circuito para todo dispara el termomagnetico frecuentemente.", "Los conductores de cobre no deben doblarse a mas de 90 grados ni aplastarse con grampas metalicas sin proteccion. Los puntos de dano mecanico son futuros cortocircuitos.", "Para iluminacion de jardin exterior, usar transformador de seguridad a 12V o 24V DC con luminarias estancas IP65. Evitar la red de 220V en exteriores mojados.", "El sistema de puesta a tierra debe verificarse con medicion de resistencia: maximo 10 Ohm en sistemas convencionales, maximo 5 Ohm cuando hay equipos sensibles.", "Las instalaciones de corrientes debiles deben ir en canerias separadas de la electricidad de fuerza a minimo 30cm. La interferencia electromagnetica degrada la senal.", "Los detectores de humo deben instalarse en cada dormitorio y en el hall de acceso. Las pilas deben reemplazarse anualmente y el equipo completo cada 10 anios.", "En instalaciones con paneles solares, el inversor debe ubicarse cerca del tablero principal en lugar fresco y ventilado. Los inversores generan calor significativo en operacion."], "climatizacion": ["El sistema VRV (Variable Refrigerant Volume) permite controlar de forma independiente cada unidad interior. Es el sistema mas eficiente para viviendas con multiples zonas de uso.", "La losa radiante por agua caliente tiene una inercia termica alta: tarda 4-6 horas en alcanzar la temperatura de regimen desde frio. No es apta para espacios de uso intermitente.", "La temperatura de agua en losa radiante no debe superar los 45-50 grados C. Temperaturas mas altas danian el piso terminado, especialmente maderas, y reducen el confort.", "El espaciado estandar entre tubos de losa radiante por agua es 15-20cm. Con mayor separacion se generan zonas frias perceptibles en el piso.", "Los sistemas de losa radiante electrica tienen menor inercia termica que los de agua: responden en 30-60 minutos. Son mas adecuados para banos y espacios de uso puntual.", "El coeficiente de rendimiento (COP) de los equipos de AC inverter de ultima generacion supera 4.5. Producen 4.5 unidades de calor por cada unidad de energia consumida.", "Los equipos de AC deben dimensionarse correctamente: 60W de frio por m2 en climas templados. Sobredimensionar genera ciclos de arranque/parada frecuentes que reducen la vida util.", "La unidad exterior de AC debe ubicarse en lugar ventilado con acceso libre minimo de 50cm en todos los lados. El calor rechazado sin circulacion de aire reduce el rendimiento hasta un 30%.", "En viviendas con losa radiante, el piso de madera maciza no debe superar 27 grados C en la superficie. La madera se contrae y fisura con temperaturas de losa mayores.", "El aislamiento bajo la losa radiante es critico: sin el, el 40-50% del calor se pierde hacia abajo. Usar poliestireno extruido (XPS) de minimo 40mm de espesor.", "Los termostatos de losa radiante deben instalarse en posicion de lectura del piso, no del ambiente. La temperatura de consigna de piso de 29 grados C equivale a unos 21 grados C de ambiente.", "El sistema de climatizacion en dormitorios no debe generar ruido mayor a 35dB(A) en modo nocturno. Especificar este requisito al fabricante al seleccionar los equipos.", "Las bombas de calor aire-agua (aerotermia) tienen un rendimiento de COP 3-5 para calefaccion. Son la solucion mas eficiente para alimentar losa radiante con fuente renovable.", "La ventilacion mecanica con recuperacion de calor (VMC) es especialmente importante en viviendas muy hermeticas. Sin ventilacion, la calidad del aire interior se degrada en horas.", "Los conductos de AC no deben pasar por espacios sin acceso para mantenimiento. Un condensado mal drenado en un conducto inaccesible genera danos en techos y muros.", "En proyectos con vigas invertidas, coordinar el paso de canerias de AC antes de cerrar los techos. Modificar el trazado despues implica demolicion o instalaciones visibles.", "La refrigeracion de espacios con grandes superficies vidriadas orientadas al norte requiere refuerzo de capacidad de un 20-30%. El vidrio convencional transmite gran parte de la radiacion solar.", "Los equipos de AC deben recibir mantenimiento anual: limpieza de filtros, verificacion de carga de gas refrigerante y comprobacion de drenajes. Sin mantenimiento, el rendimiento cae un 25% anual."], "paisajismo": ["Las especies nativas de la costa uruguaya (pampas grass, cortaderia, totora) requieren minimo mantenimiento y son mas resistentes a los vientos salinos que las especies exoticas.", "La distancia de plantacion de arboles de gran porte respecto a la edificacion debe ser minimo igual a la altura adulta esperada del arbol. Las raices pueden daniar cimentaciones.", "Los sistemas de riego por goteo son hasta un 50% mas eficientes que el riego por aspersion. Para praderas y jardines extensos, combinar goteo en arbustos y aspersion en cesped.", "El sustrato para jardineras elevadas debe incluir perlita o vermiculita (20-30%) para mejorar el drenaje. La tierra comun sin aditivo se compacta y genera encharcamiento.", "Las plantas en macetas y jardineras requieren sustrato renovado cada 2-3 anios. Con el tiempo, la tierra pierde estructura y los nutrientes se agotan.", "El cesped en sombra requiere especies especificas de tolerancia a baja luz. El cesped de sol en zona sombreada se adelgaza progresivamente y deja espacios para malezas.", "Los bordillos de separacion entre jardin y deck o vereda deben fijarse con anclaje estructural al suelo. Los bordillos sueltos se mueven con el ciclo de lluvia-secado del suelo.", "Las luminarias de jardin con estaca deben plantarse a minimo 30cm de profundidad para estabilidad. Las estacas poco enterradas caen con el primer viento o riego.", "El drenaje del jardin es tan importante como el riego. Sin pendiente hacia sumideros o zonas de absorcion, el agua estancada mata las raices por asfixia radicular.", "Las plantas suculentas y cactaceas son ideales para zonas de dificil acceso o sin riego automatico. Requieren minima agua y toleran la salinidad costera.", "La poda de formacion en arboles jovenes (primeros 3-5 anios) define la estructura definitiva del arbol. Una mala formacion genera ramas debiles que se rompen con el viento.", "Los herbicidas de contacto solo matan la parte aerea. Para malezas perennes con raiz profunda, usar herbicidas sistemicos que llegan a la raiz o extraccion manual completa.", "Las plantas trepadoras sobre fachadas pueden daniar los revestimientos. Usar sistemas de guias metalicas separadas 10-15cm del muro para permitir ventilacion y acceso.", "El riego automatico con sensor de lluvia evita el desperdicio de agua en dias de lluvia y reduce el consumo hasta un 30% en temporada humeda.", "El mulching (cobertura de corteza o guijarros) en la base de los arbustos reduce la perdida de humedad del suelo hasta un 50% y disminuye la proliferacion de malezas.", "Las palmeras en zona costera son altamente resistentes al viento y la salinidad. El problema mas comun es la carencia de potasio: fertilizar especificamente con K en primavera.", "La jardinera en cubierta verde requiere sustrato liviano especifico: vermiculita, perlita y turba. El sustrato convencional de jardin pesa 1500 kg/m3 saturado, excesivo para una losa.", "Los arboles de hoja caduca orientados al norte generan sombra en verano y permiten la ganancia solar en invierno cuando no tienen hojas. Estrategia bioclimatica eficiente y gratuita."], "gabinete_rep": ["En AutoCAD, trabajar siempre en metros con precision de 3 decimales. Los planos en milimetros o centimetros generan errores al escalar para distintos formatos.", "Organizar las capas de CAD desde el inicio del proyecto: muros, aberturas, cotas, texturas, mobiliario, notas. Mezclar elementos en capas incorrectas imposibilita el control de impresion.", "Los bloques de CAD para sanitarios, mobiliario y artefactos deben almacenarse en una biblioteca personal. Redibujar los mismos elementos en cada proyecto desperdicia horas de trabajo.", "En SketchUp, modelar siempre con grupos o componentes, nunca con geometria suelta. La geometria suelta se fusiona con otras superficies y es imposible de mover o modificar despues.", "Los renders de anteproyecto para cliente no necesitan ser fotorrealistas. La composicion, la escala humana y la atmosfera comunicativa valen mas que el nivel de detalle del material.", "El corte arquitectonico para presentacion al cliente debe tener: perfil de corte en negro solido (el mas grueso), elementos vistos en gris medio, texturas en linea fina y figuras humanas para escala.", "En la planta de presentacion, el valor comunicativo viene de la jerarquia de lineas, no de la cantidad de informacion. Demasiadas cotas y notas dificultan la lectura del espacio.", "Los layouts de AutoCAD deben configurarse con el espacio de papel en el tamano del plano final (A1, A0) y la ventana de modelo con la escala exacta bloqueada. Escalar en impresion genera errores.", "El SketchUp Viewer online corre el modelo en la nube y genera videos mas fluidos que el escritorio en computadoras de gama media. Util para presentaciones en pantalla al cliente.", "La maqueta 3D digital debe modelarse con el nivel de detalle necesario para la etapa del proyecto: en anteproyecto, volumen y materialidad general; en ejecutivo, cada junta y detalle.", "Para renders de alta calidad con bajo costo, los programas de render en nube (Lumion, Enscape, Chaos Cloud) procesan en servidores externos y entregan en horas imagenes que tardarian dias en una PC local.", "El moodboard para presentar al cliente o a los renderistas debe tener maximo 12-15 imagenes organizadas por: atmosfera general, materialidad exterior, materialidad interior e iluminacion.", "Los archivos de proyecto deben nombrarse con fecha en formato AAAAMMDD al inicio: 20260701_EV_PLANTA_BAJA_v3. Permite ordenar cronologicamente y evita la confusion entre versiones.", "Las laminas de presentacion municipal deben incluir: planta de implantacion con curvas de nivel, plantas por nivel, dos cortes, dos vistas y esquema sanitario. Falta cualquiera y el gestor devuelve.", "Al exportar de SketchUp a CAD (DWG), hacerlo siempre desde una vista en planta con seccion activa a 1.20m de altura. Asi las aberturas aparecen cortadas correctamente en el archivo DWG.", "La escala grafica en el cartucho del plano es mas importante que la escala numerica porque no varia al imprimir en tamanos distintos. Siempre incluir ambas.", "Para modelar una fachada con parasoles en SketchUp, crear un solo parasol como componente y despues usar el comando Array o Copy para multiplicarlo. Modificar uno modifica todos automaticamente.", "El video de recorrido virtual para cliente debe durar entre 60 y 90 segundos. Mas tiempo aburre; menos tiempo no permite entender el proyecto. Estructurarlo: exterior, acceso, espacios sociales, espacios privados."]};
+
+let consejoIdx = Math.floor(Math.random() * CONSEJOS.length);
+function showConsejo() { document.getElementById('consejo-text').textContent = CONSEJOS[consejoIdx]; }
+function nextConsejo() { consejoIdx = (consejoIdx+1) % CONSEJOS.length; showConsejo(); }
+
+const RUBROS = [
+  { id:'estructura',         icon:'🏗️', title:'Estructura',          sub:null, desc:'Hormigón, steel frame, mampostería' },
+  { id:'albanileria',        icon:'🧱', title:'Albañilería',          sub:null, desc:'Muros, revoques, contrapisos' },
+  { id:'impermeabilizacion', icon:'💧', title:'Impermeabilizaciones', sub:null, desc:'Membranas, selladores, detalles' },
+  { id:'cubierta',           icon:'🏠', title:'Cubierta',             sub:null, desc:'Madera, chapa, losa' },
+  { id:'revestimientos',     icon:'🪵', title:'Revestimientos',       sub:null, desc:'Piedra, lapacho, pórfido' },
+  { id:'carpinterias',       icon:'🚪', title:'Carpinterías',         sub:['Aluminio','Madera','PVC'], desc:'Aluminio, madera, PVC' },
+  { id:'sanitarias',         icon:'🔧', title:'Inst. Sanitarias',     sub:['Agua fría','Agua caliente','Cloacal','Pluvial'], desc:'Agua, cloacas, pluvial' },
+  { id:'electrica',          icon:'⚡', title:'Inst. Eléctrica',      sub:['Luminarias','Fuerza','Alarma / cámaras','Corrientes débiles','Audio'], desc:'Luminarias, fuerza, audio...' },
+  { id:'climatizacion',      icon:'🌡️', title:'Climatización',        sub:['VRV','Losa radiante por agua','Losa radiante eléctrica'], desc:'VRV, losa radiante' },
+  { id:'paisajismo',         icon:'🌿', title:'Paisajismo',           sub:null, desc:'Vegetación, riego, iluminación' },
+  { id:'gabinete_rep',        icon:'✏️', title:'Gabinete / Representación', sub:null, desc:'CAD, SketchUp, renders, presentaciones' },
+  { id:'proveedores',        icon:'👥', title:'Proveedores',          sub:null, desc:'Contactos y calificaciones', special:'prov' },
+];
+const SOFT = [
+  { id:'comunicacion',     icon:'💬', title:'Comunicación',     sub:null, desc:'Con jefes, clientes, proveedores' },
+  { id:'gestion',          icon:'📋', title:'Gestión y foco',   sub:null, desc:'Prioridades, tiempo, productividad' },
+  { id:'liderazgo',        icon:'🎯', title:'Liderazgo',        sub:null, desc:'Dirección de obra, decisiones' },
+  { id:'autoconocimiento', icon:'🧠', title:'Autoconocimiento', sub:null, desc:'Ansiedad, confianza, errores' },
+  { id:'victorias',        icon:'🏆', title:'Victorias',        sub:null, desc:'Logros y hitos profesionales', special:'victorias' },
+];
+const PROYECTOS = [
+  { id:'proy-EV',  icon:'🏡', title:'Proyecto EV',  sub:null, desc:'José Ignacio', special:'proyecto' },
+  { id:'proy-NT',  icon:'🏡', title:'Proyecto NT',  sub:null, desc:'José Ignacio', special:'proyecto' },
+  { id:'proy-RI',  icon:'🔨', title:'Reforma RI',   sub:null, desc:'Dirección de obra', special:'proyecto' },
+];
+
+const TABS_TECH  = ['aprendizaje','error','criterio','gabinete','obra','ia'];
+const TABS_SOFT  = ['aprendizaje','criterio','habilidad','victoria'];
+const TABS_PROY  = ['aprendizaje','error','criterio'];
+const TAB_LABELS = { aprendizaje:'Aprendizajes', error:'Errores', criterio:'Criterios', gabinete:'Gabinete', obra:'Obra', habilidad:'Habilidades', victoria:'Victorias', ia:'🤖 Conocimientos IA' };
+
+let state = { rubro:null, sub:null, tab:'aprendizaje', isProyecto:false };
+let cache = { entries:null, provs:null };
+let counts = {};
+let editRowIdx = null;
+
+/* OFFLINE QUEUE */
+function isOnline() { return navigator.onLine; }
+function getQueue() { try { return JSON.parse(localStorage.getItem(OFFLINE_KEY)||'[]'); } catch(e){ return []; } }
+function addToQueue(item) { const q=getQueue(); q.push(item); localStorage.setItem(OFFLINE_KEY,JSON.stringify(q)); }
+async function flushQueue() {
+  const q=getQueue();
+  if(!q.length) return;
+  for(const item of q) { try { await apiPost(item.hoja,item.fila); } catch(e){ return; } }
+  localStorage.removeItem(OFFLINE_KEY);
+  toast(`${q.length} entrada(s) offline sincronizadas ✓`,'ok');
+}
+function updateOfflineBadge() {
+  const q=getQueue();
+  const b=document.getElementById('offline-badge');
+  b.textContent = q.length ? `⚡ ${q.length} offline` : '⚡ Offline';
+  b.classList.toggle('show', !isOnline() || q.length>0);
+}
+window.addEventListener('online', ()=>{ updateOfflineBadge(); flushQueue(); });
+window.addEventListener('offline', updateOfflineBadge);
+
+/* NAV */
+function goHome() { state={rubro:null,sub:null,tab:'aprendizaje',isProyecto:false}; show('home'); buildBreadcrumb(); loadHome(); }
+function goRubro(r) {
+  state.rubro=r.id; state.sub=null; state.isProyecto=false;
+  if(r.special==='prov'){show('proveedores');loadProvs();buildBreadcrumb();return;}
+  if(r.special==='proyecto'){state.isProyecto=true;show('proyecto');buildProyecto(r);buildBreadcrumb();return;}
+  if(r.special==='victorias'){show('entries');document.getElementById('entries-title').textContent='🏆 Victorias';state.tab='victoria';buildTabs();loadEntries();buildBreadcrumb();return;}
+  if(r.sub){show('sub');buildSubs(r);buildBreadcrumb();return;}
+  show('entries');
+  document.getElementById('entries-title').textContent=r.title;
+  buildTabs(); loadEntries(); buildBreadcrumb();
+}
+function goSub(r,s){
+  state.sub=s; show('entries');
+  document.getElementById('entries-title').textContent=r.title+' — '+s;
+  buildTabs(); loadEntries(); buildBreadcrumb();
+}
+function show(v){['home','sub','entries','proveedores','proyecto'].forEach(x=>document.getElementById('view-'+x).style.display=x===v?'':'none');}
+function buildBreadcrumb(){
+  const bc=document.getElementById('breadcrumb');
+  let h='<span class="bc-link" onclick="goHome()">Inicio</span>';
+  if(state.rubro){
+    const all=[...RUBROS,...SOFT,...PROYECTOS];
+    const r=all.find(x=>x.id===state.rubro);
+    h+='<span class="bc-sep">›</span>';
+    if(state.sub) h+=`<span class="bc-link" onclick="goRubro(${JSON.stringify(r)})">${r?r.title:state.rubro}</span><span class="bc-sep">›</span><span class="bc-cur">${state.sub}</span>`;
+    else h+=`<span class="bc-cur">${r?r.title:state.rubro}</span>`;
+  } else { h='<span class="bc-cur">Inicio</span>'; }
+  bc.innerHTML=h;
+}
+function buildTabs(){
+  const isSoft=SOFT.find(x=>x.id===state.rubro);
+  const tabs=isSoft?TABS_SOFT:state.isProyecto?TABS_PROY:TABS_TECH;
+  document.getElementById('tabs-bar').innerHTML=tabs.map(t=>`<div class="tab ${t===state.tab?'active':''}" onclick="switchTab('${t}')">${TAB_LABELS[t]}</div>`).join('');
+}
+function switchTab(t){state.tab=t;buildTabs();renderEntries();}
+
+/* HOME */
+function buildHome(){
+  const allR=[...RUBROS,...SOFT,...PROYECTOS];
+  document.getElementById('grid-rubros').innerHTML=RUBROS.map(r=>`
+    <div class="card" onclick='goRubro(${JSON.stringify(r)})'>
+      <div class="card-icon">${r.icon}</div>
+      <div class="card-title">${r.title}</div>
+      <div class="card-desc">${r.desc}</div>
+      ${counts[r.id]?`<div class="card-count">${counts[r.id]}</div>`:''}
+    </div>`).join('');
+  document.getElementById('grid-soft').innerHTML=SOFT.map(r=>`
+    <div class="card card-soft" onclick='goRubro(${JSON.stringify(r)})'>
+      <div class="card-icon">${r.icon}</div>
+      <div class="card-title">${r.title}</div>
+      <div class="card-desc">${r.desc}</div>
+      ${counts[r.id]?`<div class="card-count">${counts[r.id]}</div>`:''}
+    </div>`).join('');
+  document.getElementById('grid-proyectos').innerHTML=PROYECTOS.map(r=>`
+    <div class="card" onclick='goRubro(${JSON.stringify(r)})'>
+      <div class="card-icon">${r.icon}</div>
+      <div class="card-title">${r.title}</div>
+      <div class="card-desc">${r.desc}</div>
+    </div>`).join('');
+}
+function buildSubs(r){
+  document.getElementById('grid-subs').innerHTML=r.sub.map(s=>`
+    <div class="card" onclick='goSub(${JSON.stringify(r)},"${s}")'>
+      <div class="card-icon">📁</div>
+      <div class="card-title">${s}</div>
+    </div>`).join('');
+}
+function buildProyecto(r){
+  document.getElementById('proyecto-title').textContent = r.title + ' — Pendientes';
+  renderPendientes();
+}
+function goRubroById(id){const all=[...RUBROS,...SOFT,...PROYECTOS];const r=all.find(x=>x.id===id);if(r)goRubro(r);}
+
+/* API */
+async function apiGet(hoja){
+  const r=await fetch(`${SCRIPT_URL}?hoja=${encodeURIComponent(hoja)}`);
+  if(!r.ok) throw new Error('Error '+r.status);
+  const d=await r.json(); return d.rows||[];
+}
+async function apiPost(hoja,fila){
+  const r=await fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify({hoja,fila})});
+  if(!r.ok) throw new Error('Error '+r.status);
+  return r.json();
+}
+
+/* LOAD HOME */
+async function loadHome(){
+  document.getElementById('ultimas-grid').innerHTML='<div class="loading">Cargando...</div>';
+  try {
+    const rows=await apiGet('BITACORA');
+    cache.entries=rows.slice(1).map(r=>({fecha:r[0]||'',rubro:r[1]||'',subrubro:r[2]||'',tipo:r[3]||'',texto:r[4]||'',tags:r[5]||'',foto:r[6]||''}));
+    updateCounts();
+    buildHome();
+    renderUltimas();
+    renderVictoriasHome();
+    await flushQueue();
+  } catch(e){
+    document.getElementById('ultimas-grid').innerHTML='<div style="color:#aaa;font-size:13px">Sin conexión — trabajando offline.</div>';
+    updateOfflineBadge();
+  }
+}
+function updateCounts(){
+  counts={};
+  (cache.entries||[]).forEach(e=>{ counts[e.rubro]=(counts[e.rubro]||0)+1; });
+}
+function renderUltimas(){
+  const ultimas=(cache.entries||[]).slice(-6).reverse();
+  const all=[...RUBROS,...SOFT,...PROYECTOS];
+  if(!ultimas.length){document.getElementById('ultimas-grid').innerHTML='<div style="color:#aaa;font-size:13px">Todavía no hay entradas.</div>';return;}
+  document.getElementById('ultimas-grid').innerHTML=ultimas.map(e=>{
+    const r=all.find(x=>x.id===e.rubro);
+    const rl=e.subrubro?`${r?r.title:e.rubro} › ${e.subrubro}`:(r?r.title:e.rubro);
+    return `<div class="ultima-card" onclick="goRubroById('${e.rubro}')">
+      <div class="ultima-header">
+        <span class="entry-type t-${e.tipo}">${e.tipo}</span>
+        <span class="ultima-rubro">${rl}</span>
+        <span class="ultima-date">${e.fecha}</span>
+      </div>
+      <div class="ultima-text">${e.texto}</div>
+    </div>`;
+  }).join('');
+}
+function renderVictoriasHome(){
+  const vics=(cache.entries||[]).filter(e=>e.tipo==='victoria');
+  const card=document.getElementById('victorias-home');
+  if(!vics.length){card.style.display='none';return;}
+  card.style.display='';
+  document.getElementById('victorias-count').textContent=vics.length;
+  document.getElementById('victorias-list').innerHTML=vics.slice(-3).reverse().map(v=>`
+    <div class="victoria-item"><span class="victoria-bullet">★</span><span>${v.texto.slice(0,120)}${v.texto.length>120?'...':''}</span></div>`).join('');
+}
+
+/* ENTRIES */
+async function loadEntries(){
+  document.getElementById('entries-list').innerHTML='<div class="loading">Cargando...</div>';
+  try {
+    if(!cache.entries){
+      const rows=await apiGet('BITACORA');
+      cache.entries=rows.slice(1).map(r=>({fecha:r[0]||'',rubro:r[1]||'',subrubro:r[2]||'',tipo:r[3]||'',texto:r[4]||'',tags:r[5]||'',foto:r[6]||''}));
+    }
+    renderEntries();
+  } catch(e){
+    document.getElementById('entries-list').innerHTML=`<div class="empty-state"><div class="empty-icon">⚠️</div>Sin conexión.<br><small>${e.message}</small></div>`;
+  }
+}
+function renderEntries(){
+  // Special IA tab — show static knowledge from IA_CONOCIMIENTOS
+  if(state.tab === 'ia'){
+    renderIAKnowledge(); return;
+  }
+  const all=(cache.entries||[]).map((e,i)=>({...e,_idx:i})).filter(e=>
+    e.rubro===state.rubro &&
+    (state.sub?e.subrubro===state.sub:true) &&
+    e.tipo===state.tab
+  );
+  const el=document.getElementById('entries-list');
+  if(!all.length){el.innerHTML='<div class="empty-state"><div class="empty-icon">📝</div>No hay entradas de este tipo aún.</div>';return;}
+  el.innerHTML=all.reverse().map(e=>`
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-header-left">
+          <span class="entry-type t-${e.tipo}">${e.tipo}</span>
+          <span class="entry-date">${e.fecha}</span>
+        </div>
+        <div class="entry-actions">
+          <button class="btn btn-ghost btn-sm" onclick="openEdit(${e._idx})">✎ Editar</button>
+        </div>
+      </div>
+      <div class="entry-text">${e.texto}</div>
+      ${e.tags?`<div class="entry-tags">${e.tags.split(',').map(t=>`<span class="tag" onclick="onSearch('${t.trim()}')">${t.trim()}</span>`).join('')}</div>`:''}
+      ${e.foto?`<div class="entry-photo"><img src="${e.foto}" onerror="this.parentElement.style.display='none'"></div>`:''}
+    </div>`).join('');
+}
+
+function renderIAKnowledge(){
+  const el=document.getElementById('entries-list');
+  const rubroKey = state.sub ? state.rubro+'__'+state.sub : state.rubro;
+  const consejos = IA_CONOCIMIENTOS[state.rubro] || [];
+  if(!consejos.length){
+    el.innerHTML='<div class="empty-state"><div class="empty-icon">🤖</div>No hay conocimientos IA para este rubro aún.</div>';
+    return;
+  }
+  el.innerHTML = `
+    <div style="background:#f0f4ff;border:1px solid #c8d8f8;border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:12px;color:#1a4a8b;">
+      🤖 <b>Conocimientos IA</b> — Consejos técnicos extraídos de manuales constructivos de referencia. Son informativos y complementan tu criterio profesional.
+    </div>` +
+    consejos.map((c,i)=>`
+    <div class="entry" style="border-left:3px solid #4a7adb;">
+      <div class="entry-header">
+        <div class="entry-header-left">
+          <span class="entry-type" style="background:#e8f0fe;color:#1a4a8b;">IA ${String(i+1).padStart(2,'0')}</span>
+        </div>
+      </div>
+      <div class="entry-text">${c}</div>
+    </div>`).join('');
+}
+
+/* PROYECTO ENTRIES */
+/* PENDIENTES POR PROYECTO */
+// pendientesData[rubroId] = [{texto, fecha, done}]
+let pendientesData = {};
+const PEND_KEY = 'bitacora_pendientes';
+
+function loadPendientesLocal(){
+  try { pendientesData = JSON.parse(localStorage.getItem(PEND_KEY)||'{}'); } catch(e){ pendientesData={}; }
+}
+function savePendientesLocal(){
+  localStorage.setItem(PEND_KEY, JSON.stringify(pendientesData));
+}
+
+function renderPendientes(){
+  const rubro = state.rubro;
+  const items = (pendientesData[rubro]||[]);
+  const pending = items.map((p,i)=>({...p,_idx:i})).filter(p=>!p.done);
+  const done    = items.map((p,i)=>({...p,_idx:i})).filter(p=> p.done);
+  const el = document.getElementById('pendientes-list');
+  if(!items.length){
+    el.innerHTML='<div class="pend-empty">📋 No hay pendientes. ¡Agregá el primero!</div>';
+    return;
+  }
+  let html = '';
+  if(pending.length){
+    html += pending.map(p=>pendienteHTML(p)).join('');
+  }
+  if(done.length){
+    html += `<div class="pend-section-label">✓ Completados (${done.length})</div>`;
+    html += done.map(p=>pendienteHTML(p)).join('');
+  }
+  el.innerHTML = html;
+}
+
+function pendienteHTML(p){
+  return `<div class="pendiente-item ${p.done?'completado':''}" id="pend-${p._idx}">
+    <div class="pend-check ${p.done?'done':''}" onclick="togglePend(${p._idx})">${p.done?'✓':''}</div>
+    <div class="pend-body">
+      <div class="pend-texto">${p.texto}</div>
+      <div class="pend-date">${p.fecha||''}</div>
+    </div>
+    <div class="pend-actions">
+      <button class="btn btn-ghost btn-sm" onclick="editPend(${p._idx})">✎</button>
+      <button class="btn btn-danger btn-sm" onclick="deletePend(${p._idx})">✕</button>
+    </div>
+  </div>`;
+}
+
+function togglePend(idx){
+  const rubro=state.rubro;
+  if(!pendientesData[rubro]) return;
+  pendientesData[rubro][idx].done = !pendientesData[rubro][idx].done;
+  savePendientesLocal();
+  renderPendientes();
+}
+
+function deletePend(idx){
+  const rubro=state.rubro;
+  if(!pendientesData[rubro]) return;
+  if(!confirm('¿Eliminar este pendiente?')) return;
+  pendientesData[rubro].splice(idx,1);
+  savePendientesLocal();
+  renderPendientes();
+}
+
+function editPend(idx){
+  const rubro=state.rubro;
+  const p=(pendientesData[rubro]||[])[idx];
+  if(!p) return;
+  const nuevo=prompt('Editar pendiente:', p.texto);
+  if(nuevo===null) return;
+  pendientesData[rubro][idx].texto=nuevo.trim()||p.texto;
+  savePendientesLocal();
+  renderPendientes();
+}
+
+function toggleForm(){
+  const f=document.getElementById('entry-form');
+  f.classList.toggle('hidden');
+  if(!f.classList.contains('hidden')) document.getElementById('f-fecha').value=new Date().toISOString().split('T')[0];
+}
+function toggleFormProy(){document.getElementById('entry-form-proy').classList.toggle('hidden');}
+function previewFoto(url){const img=document.getElementById('foto-preview');if(url){img.src=url;img.style.display='block';}else{img.style.display='none';}}
+
+async function saveEntry(){
+  const texto=document.getElementById('f-texto').value.trim();
+  if(!texto){toast('Escribí algo antes de guardar.','err');return;}
+  const fila=[document.getElementById('f-fecha').value,state.rubro,state.sub||'',document.getElementById('f-tipo').value,texto,document.getElementById('f-tags').value,document.getElementById('f-foto').value];
+  try {
+    toast('Guardando...','info');
+    if(isOnline()){
+      await apiPost('BITACORA',fila);
+    } else {
+      addToQueue({hoja:'BITACORA',fila});
+      updateOfflineBadge();
+      toast('Guardado offline — se sincronizará cuando haya conexión','info');
+    }
+    if(!cache.entries) cache.entries=[];
+    cache.entries.push({fecha:fila[0],rubro:fila[1],subrubro:fila[2],tipo:fila[3],texto:fila[4],tags:fila[5],foto:fila[6]});
+    document.getElementById('f-texto').value='';
+    document.getElementById('f-tags').value='';
+    document.getElementById('f-foto').value='';
+    document.getElementById('foto-preview').style.display='none';
+    toggleForm();
+    renderEntries();
+    if(isOnline()) toast('Guardado en Sheets ✓','ok');
+  } catch(e){
+    addToQueue({hoja:'BITACORA',fila});
+    updateOfflineBadge();
+    toast('Sin conexión — guardado offline','info');
+  }
+}
+
+function saveEntryProy(){
+  const texto=document.getElementById('fp-texto').value.trim();
+  if(!texto){toast('Escribí el pendiente antes de agregar.','err');return;}
+  const rubro=state.rubro;
+  if(!pendientesData[rubro]) pendientesData[rubro]=[];
+  pendientesData[rubro].unshift({
+    texto,
+    fecha: new Date().toLocaleDateString('es-UY'),
+    done: false
+  });
+  savePendientesLocal();
+  document.getElementById('fp-texto').value='';
+  toggleFormProy();
+  renderPendientes();
+  toast('Pendiente agregado ✓','ok');
+}
+
+/* EDIT */
+function openEdit(idx){
+  const e=(cache.entries||[])[idx];
+  if(!e) return;
+  editRowIdx=idx;
+  document.getElementById('edit-row-idx').value=idx;
+  document.getElementById('edit-tipo').value=e.tipo;
+  document.getElementById('edit-texto').value=e.texto;
+  document.getElementById('edit-tags').value=e.tags;
+  document.getElementById('edit-modal').classList.remove('hidden');
+}
+function closeEdit(){document.getElementById('edit-modal').classList.add('hidden'); window._editContext=null;}
+
+function openEditProy(idx){
+  const e=(cache.entries||[])[idx];
+  if(!e) return;
+  window._editContext='proyecto';
+  document.getElementById('edit-row-idx').value=idx;
+  document.getElementById('edit-tipo').value=e.tipo;
+  document.getElementById('edit-texto').value=e.texto;
+  document.getElementById('edit-tags').value=e.tags||'';
+  document.getElementById('edit-modal').classList.remove('hidden');
+}
+async function saveEdit(){
+  const idx=parseInt(document.getElementById('edit-row-idx').value);
+  const e=(cache.entries||[])[idx];
+  if(!e) return;
+  e.tipo=document.getElementById('edit-tipo').value;
+  e.texto=document.getElementById('edit-texto').value;
+  e.tags=document.getElementById('edit-tags').value;
+  // Update date to today to reflect last modification
+  e.fecha=new Date().toISOString().split('T')[0];
+  toast('Edición guardada localmente. Para actualizar Sheets, corregí la fila directamente en el Sheet.','info');
+  closeEdit();
+  if(window._editContext==='proyecto'){ renderPendientes(); window._editContext=null; }
+  else { renderEntries(); }
+}
+
+/* SEARCH */
+let searchTimeout;
+function onSearch(q){
+  const input=document.getElementById('search-input');
+  if(q!==undefined && input.value!==q) input.value=q;
+  clearTimeout(searchTimeout);
+  searchTimeout=setTimeout(()=>doSearch(input.value.trim()),300);
+}
+function doSearch(q){
+  const sr=document.getElementById('search-results');
+  const sl=document.getElementById('search-list');
+  if(!q){sr.classList.add('hidden');return;}
+  const results=(cache.entries||[]).filter(e=>
+    e.texto.toLowerCase().includes(q.toLowerCase())||
+    (e.tags&&e.tags.toLowerCase().includes(q.toLowerCase()))||
+    (e.rubro&&e.rubro.toLowerCase().includes(q.toLowerCase()))
+  );
+  document.getElementById('search-results-title').textContent=`${results.length} resultado(s) para "${q}"`;
+  if(!results.length){sl.innerHTML='<div class="empty-state"><div class="empty-icon">🔍</div>Sin resultados.</div>';sr.classList.remove('hidden');return;}
+  sl.innerHTML=results.reverse().map(e=>`
+    <div class="entry">
+      <div class="entry-header">
+        <div class="entry-header-left">
+          <span class="entry-type t-${e.tipo}">${e.tipo}</span>
+          <span style="font-size:11px;color:#8b7355;font-weight:500">${e.rubro}${e.subrubro?' › '+e.subrubro:''}</span>
+          <span class="entry-date">${e.fecha}</span>
+        </div>
+      </div>
+      <div class="entry-text">${e.texto}</div>
+      ${e.tags?`<div class="entry-tags">${e.tags.split(',').map(t=>`<span class="tag">${t.trim()}</span>`).join('')}</div>`:''}
+    </div>`).join('');
+  sr.classList.remove('hidden');
+}
+
+/* PROVEEDORES */
+async function loadProvs(){
+  document.getElementById('prov-list').innerHTML='<div class="loading">Cargando...</div>';
+  try {
+    const rows=await apiGet('PROVEEDORES');
+    cache.provs=rows.slice(1).map(r=>({nombre:r[0]||'',rubro:r[1]||'',contacto:r[2]||'',tel:r[3]||'',notas:r[4]||'',rating:parseInt(r[5])||3}));
+    renderProvs();
+  } catch(e){document.getElementById('prov-list').innerHTML=`<div class="empty-state"><div class="empty-icon">⚠️</div>Sin conexión.</div>`;}
+}
+function renderProvs(){
+  const el=document.getElementById('prov-list');
+  if(!(cache.provs||[]).length){el.innerHTML='<div class="empty-state"><div class="empty-icon">👥</div>No hay proveedores aún.</div>';return;}
+  el.innerHTML=cache.provs.map(p=>`
+    <div class="prov-card">
+      <div class="prov-name">${p.nombre}</div>
+      <div class="prov-rubro">${p.rubro}</div>
+      <div class="prov-info">${p.contacto?`<b>Contacto:</b> ${p.contacto}<br>`:''}${p.tel?`<b>Tel:</b> ${p.tel}<br>`:''}${p.notas?p.notas:''}</div>
+      <div class="prov-rating">${'★'.repeat(p.rating)}${'☆'.repeat(5-p.rating)}</div>
+    </div>`).join('');
+}
+function toggleProvForm(){document.getElementById('prov-form').classList.toggle('hidden');}
+async function saveProv(){
+  const nombre=document.getElementById('p-nombre').value.trim();
+  if(!nombre){toast('Ponele un nombre al proveedor.','err');return;}
+  const fila=[nombre,document.getElementById('p-rubro').value,document.getElementById('p-contacto').value,document.getElementById('p-tel').value,document.getElementById('p-notas').value,document.getElementById('p-rating').value];
+  try {
+    toast('Guardando...','info');
+    await apiPost('PROVEEDORES',fila);
+    ['p-nombre','p-rubro','p-contacto','p-tel','p-notas'].forEach(id=>document.getElementById(id).value='');
+    toggleProvForm();
+    cache.provs=null;
+    await loadProvs();
+    toast('Proveedor guardado ✓','ok');
+  } catch(e){toast('Error: '+e.message,'err');}
+}
+
+/* SYNC */
+async function syncAll(){
+  toast('Sincronizando...','info');
+  cache.entries=null; cache.provs=null;
+  await loadHome();
+  toast('Sincronizado ✓','ok');
+}
+
+/* PDF */
+function exportPDF(){ window.print(); }
+
+/* TOAST */
+function toast(msg,type){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className=`status ${type}`;
+  clearTimeout(t._t);
+  t._t=setTimeout(()=>{t.className='status hidden';},4000);
+}
+
+showConsejo();
+buildHome();
+loadHome();
+loadPendientesLocal();
+updateOfflineBadge();
+</script>
+
+
+</body></html>
