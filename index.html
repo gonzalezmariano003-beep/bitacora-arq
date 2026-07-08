@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!-- saved from url=(0053)file:///C:/Users/maria/Downloads/bitacora_arq_15.html -->
-<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="es">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bitácora Técnica — AV Group</title>
 <style>
@@ -210,7 +210,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
       <div class="consejo-icon">💡</div>
       <div>
         <div class="consejo-label">Consejo del día</div>
-        <div class="consejo-text" id="consejo-text">Pedir número directo a proveedores y clientes para resolver con vos, no pasar por los jefes.</div>
+        <div class="consejo-text" id="consejo-text"></div>
         <span class="consejo-refresh" onclick="nextConsejo()">↺ Otro consejo</span>
       </div>
     </div>
@@ -221,181 +221,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
         <div class="victorias-count" id="victorias-count">0</div>
       </div>
       <div class="victorias-list" id="victorias-list"></div>
-      <span class="ver-todas" onclick="goRubroById(&#39;victorias&#39;)">Ver todas →</span>
+      <span class="ver-todas" onclick="goRubroById('victorias')">Ver todas →</span>
     </div>
 
     <div class="ultimas-section">
       <div class="section-label">Últimas entradas</div>
-      <div class="ultimas-grid" id="ultimas-grid"><div class="ultima-card" onclick="goRubroById(&#39;autoconocimiento&#39;)">
-      <div class="ultima-header">
-        <span class="entry-type t-aprendizaje">aprendizaje</span>
-        <span class="ultima-rubro">Autoconocimiento</span>
-        <span class="ultima-date">2026-07-02T07:00:00.000Z</span>
-      </div>
-      <div class="ultima-text">Si  te griten que eso no altere tu bienestar interno. Tomar la critica pero focalizar en el trabajo bien hecho para no sentirte que no sirve lo que estas haciendo.</div>
-    </div><div class="ultima-card" onclick="goRubroById(&#39;gabinete_rep&#39;)">
-      <div class="ultima-header">
-        <span class="entry-type t-aprendizaje">aprendizaje</span>
-        <span class="ultima-rubro">Gabinete / Representación</span>
-        <span class="ultima-date">2026-07-02T07:00:00.000Z</span>
-      </div>
-      <div class="ultima-text">Si voy a imprimir una carpeta de para presentación, no usar colores grises claros porque la impresion no sale. el mobiliario por ej. dibujarlo casi negro.</div>
-    </div><div class="ultima-card" onclick="goRubroById(&#39;proy-NT&#39;)">
-      <div class="ultima-header">
-        <span class="entry-type t-aprendizaje">aprendizaje</span>
-        <span class="ultima-rubro">Proyecto NT</span>
-        <span class="ultima-date">2026-07-02T07:00:00.000Z</span>
-      </div>
-      <div class="ultima-text">Subir al drive maqueta sin plantas para mati</div>
-    </div><div class="ultima-card" onclick="goRubroById(&#39;climatizacion&#39;)">
-      <div class="ultima-header">
-        <span class="entry-type t-aprendizaje">aprendizaje</span>
-        <span class="ultima-rubro">Climatización › VRV</span>
-        <span class="ultima-date">2026-07-02T07:00:00.000Z</span>
-      </div>
-      <div class="ultima-text">El equipo de inyección de sistem VRV ductado va fijado con varillas roscadas a la losa</div>
-    </div><div class="ultima-card" onclick="goRubroById(&#39;proy-NT&#39;)">
-      <div class="ultima-header">
-        <span class="entry-type t-aprendizaje">aprendizaje</span>
-        <span class="ultima-rubro">Proyecto NT</span>
-        <span class="ultima-date">2026-07-02T07:00:00.000Z</span>
-      </div>
-      <div class="ultima-text">Subir al drive maqueta sin plantas para mati</div>
-    </div><div class="ultima-card" onclick="goRubroById(&#39;gestion&#39;)">
-      <div class="ultima-header">
-        <span class="entry-type t-aprendizaje">aprendizaje</span>
-        <span class="ultima-rubro">Gestión y foco</span>
-        <span class="ultima-date">2026-07-02T07:00:00.000Z</span>
-      </div>
-      <div class="ultima-text">Por mas que hagas gabinete todo el día, sali a visitar una obra por lo menos un rato en el día.</div>
-    </div></div>
+      <div class="ultimas-grid" id="ultimas-grid"><div class="loading">Cargando...</div></div>
     </div>
 
     <div class="section-label">Rubros técnicos</div>
-    <div class="grid" id="grid-rubros">
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;estructura&quot;,&quot;icon&quot;:&quot;🏗️&quot;,&quot;title&quot;:&quot;Estructura&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Hormigón, steel frame, mampostería&quot;})">
-      <div class="card-icon">🏗️</div>
-      <div class="card-title">Estructura</div>
-      <div class="card-desc">Hormigón, steel frame, mampostería</div>
-      <div class="card-count">1</div>
-    </div>
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;albanileria&quot;,&quot;icon&quot;:&quot;🧱&quot;,&quot;title&quot;:&quot;Albañilería&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Muros, revoques, contrapisos&quot;})">
-      <div class="card-icon">🧱</div>
-      <div class="card-title">Albañilería</div>
-      <div class="card-desc">Muros, revoques, contrapisos</div>
-      
-    </div>
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;impermeabilizacion&quot;,&quot;icon&quot;:&quot;💧&quot;,&quot;title&quot;:&quot;Impermeabilizaciones&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Membranas, selladores, detalles&quot;})">
-      <div class="card-icon">💧</div>
-      <div class="card-title">Impermeabilizaciones</div>
-      <div class="card-desc">Membranas, selladores, detalles</div>
-      <div class="card-count">1</div>
-    </div>
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;cubierta&quot;,&quot;icon&quot;:&quot;🏠&quot;,&quot;title&quot;:&quot;Cubierta&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Madera, chapa, losa&quot;})">
-      <div class="card-icon">🏠</div>
-      <div class="card-title">Cubierta</div>
-      <div class="card-desc">Madera, chapa, losa</div>
-      
-    </div>
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;revestimientos&quot;,&quot;icon&quot;:&quot;🪵&quot;,&quot;title&quot;:&quot;Revestimientos&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Piedra, lapacho, pórfido&quot;})">
-      <div class="card-icon">🪵</div>
-      <div class="card-title">Revestimientos</div>
-      <div class="card-desc">Piedra, lapacho, pórfido</div>
-      
-    </div>
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;carpinterias&quot;,&quot;icon&quot;:&quot;🚪&quot;,&quot;title&quot;:&quot;Carpinterías&quot;,&quot;sub&quot;:[&quot;Aluminio&quot;,&quot;Madera&quot;,&quot;PVC&quot;],&quot;desc&quot;:&quot;Aluminio, madera, PVC&quot;})">
-      <div class="card-icon">🚪</div>
-      <div class="card-title">Carpinterías</div>
-      <div class="card-desc">Aluminio, madera, PVC</div>
-      
-    </div>
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;sanitarias&quot;,&quot;icon&quot;:&quot;🔧&quot;,&quot;title&quot;:&quot;Inst. Sanitarias&quot;,&quot;sub&quot;:[&quot;Agua fría&quot;,&quot;Agua caliente&quot;,&quot;Cloacal&quot;,&quot;Pluvial&quot;],&quot;desc&quot;:&quot;Agua, cloacas, pluvial&quot;})">
-      <div class="card-icon">🔧</div>
-      <div class="card-title">Inst. Sanitarias</div>
-      <div class="card-desc">Agua, cloacas, pluvial</div>
-      
-    </div>
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;electrica&quot;,&quot;icon&quot;:&quot;⚡&quot;,&quot;title&quot;:&quot;Inst. Eléctrica&quot;,&quot;sub&quot;:[&quot;Luminarias&quot;,&quot;Fuerza&quot;,&quot;Alarma / cámaras&quot;,&quot;Corrientes débiles&quot;,&quot;Audio&quot;],&quot;desc&quot;:&quot;Luminarias, fuerza, audio...&quot;})">
-      <div class="card-icon">⚡</div>
-      <div class="card-title">Inst. Eléctrica</div>
-      <div class="card-desc">Luminarias, fuerza, audio...</div>
-      
-    </div>
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;climatizacion&quot;,&quot;icon&quot;:&quot;🌡️&quot;,&quot;title&quot;:&quot;Climatización&quot;,&quot;sub&quot;:[&quot;VRV&quot;,&quot;Losa radiante por agua&quot;,&quot;Losa radiante eléctrica&quot;],&quot;desc&quot;:&quot;VRV, losa radiante&quot;})">
-      <div class="card-icon">🌡️</div>
-      <div class="card-title">Climatización</div>
-      <div class="card-desc">VRV, losa radiante</div>
-      <div class="card-count">1</div>
-    </div>
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;paisajismo&quot;,&quot;icon&quot;:&quot;🌿&quot;,&quot;title&quot;:&quot;Paisajismo&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Vegetación, riego, iluminación&quot;})">
-      <div class="card-icon">🌿</div>
-      <div class="card-title">Paisajismo</div>
-      <div class="card-desc">Vegetación, riego, iluminación</div>
-      
-    </div>
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;gabinete_rep&quot;,&quot;icon&quot;:&quot;✏️&quot;,&quot;title&quot;:&quot;Gabinete / Representación&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;CAD, SketchUp, renders, presentaciones&quot;})">
-      <div class="card-icon">✏️</div>
-      <div class="card-title">Gabinete / Representación</div>
-      <div class="card-desc">CAD, SketchUp, renders, presentaciones</div>
-      <div class="card-count">1</div>
-    </div>
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;proveedores&quot;,&quot;icon&quot;:&quot;👥&quot;,&quot;title&quot;:&quot;Proveedores&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Contactos y calificaciones&quot;,&quot;special&quot;:&quot;prov&quot;})">
-      <div class="card-icon">👥</div>
-      <div class="card-title">Proveedores</div>
-      <div class="card-desc">Contactos y calificaciones</div>
-      
-    </div></div>
+    <div class="grid" id="grid-rubros"></div>
 
     <div class="section-label" style="margin-top:8px">Habilidades blandas</div>
-    <div class="grid" id="grid-soft">
-    <div class="card card-soft" onclick="goRubro({&quot;id&quot;:&quot;comunicacion&quot;,&quot;icon&quot;:&quot;💬&quot;,&quot;title&quot;:&quot;Comunicación&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Con jefes, clientes, proveedores&quot;})">
-      <div class="card-icon">💬</div>
-      <div class="card-title">Comunicación</div>
-      <div class="card-desc">Con jefes, clientes, proveedores</div>
-      
-    </div>
-    <div class="card card-soft" onclick="goRubro({&quot;id&quot;:&quot;gestion&quot;,&quot;icon&quot;:&quot;📋&quot;,&quot;title&quot;:&quot;Gestión y foco&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Prioridades, tiempo, productividad&quot;})">
-      <div class="card-icon">📋</div>
-      <div class="card-title">Gestión y foco</div>
-      <div class="card-desc">Prioridades, tiempo, productividad</div>
-      <div class="card-count">2</div>
-    </div>
-    <div class="card card-soft" onclick="goRubro({&quot;id&quot;:&quot;liderazgo&quot;,&quot;icon&quot;:&quot;🎯&quot;,&quot;title&quot;:&quot;Liderazgo&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Dirección de obra, decisiones&quot;})">
-      <div class="card-icon">🎯</div>
-      <div class="card-title">Liderazgo</div>
-      <div class="card-desc">Dirección de obra, decisiones</div>
-      
-    </div>
-    <div class="card card-soft" onclick="goRubro({&quot;id&quot;:&quot;autoconocimiento&quot;,&quot;icon&quot;:&quot;🧠&quot;,&quot;title&quot;:&quot;Autoconocimiento&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Ansiedad, confianza, errores&quot;})">
-      <div class="card-icon">🧠</div>
-      <div class="card-title">Autoconocimiento</div>
-      <div class="card-desc">Ansiedad, confianza, errores</div>
-      <div class="card-count">1</div>
-    </div>
-    <div class="card card-soft" onclick="goRubro({&quot;id&quot;:&quot;victorias&quot;,&quot;icon&quot;:&quot;🏆&quot;,&quot;title&quot;:&quot;Victorias&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Logros y hitos profesionales&quot;,&quot;special&quot;:&quot;victorias&quot;})">
-      <div class="card-icon">🏆</div>
-      <div class="card-title">Victorias</div>
-      <div class="card-desc">Logros y hitos profesionales</div>
-      <div class="card-count">1</div>
-    </div></div>
+    <div class="grid" id="grid-soft"></div>
 
     <div class="section-label" style="margin-top:8px">Proyectos</div>
-    <div class="grid" id="grid-proyectos">
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;proy-EV&quot;,&quot;icon&quot;:&quot;🏡&quot;,&quot;title&quot;:&quot;Proyecto EV&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;José Ignacio&quot;,&quot;special&quot;:&quot;proyecto&quot;})">
-      <div class="card-icon">🏡</div>
-      <div class="card-title">Proyecto EV</div>
-      <div class="card-desc">José Ignacio</div>
-    </div>
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;proy-NT&quot;,&quot;icon&quot;:&quot;🏡&quot;,&quot;title&quot;:&quot;Proyecto NT&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;José Ignacio&quot;,&quot;special&quot;:&quot;proyecto&quot;})">
-      <div class="card-icon">🏡</div>
-      <div class="card-title">Proyecto NT</div>
-      <div class="card-desc">José Ignacio</div>
-    </div>
-    <div class="card" onclick="goRubro({&quot;id&quot;:&quot;proy-RI&quot;,&quot;icon&quot;:&quot;🔨&quot;,&quot;title&quot;:&quot;Reforma RI&quot;,&quot;sub&quot;:null,&quot;desc&quot;:&quot;Dirección de obra&quot;,&quot;special&quot;:&quot;proyecto&quot;})">
-      <div class="card-icon">🔨</div>
-      <div class="card-title">Reforma RI</div>
-      <div class="card-desc">Dirección de obra</div>
-    </div></div>
+    <div class="grid" id="grid-proyectos"></div>
   </div>
 
   <!-- SUB -->
@@ -698,7 +539,7 @@ function buildSubs(r){
 }
 function buildProyecto(r){
   document.getElementById('proyecto-title').textContent = r.title + ' — Pendientes';
-  renderPendientes();
+  loadPendientes();
 }
 function goRubroById(id){const all=[...RUBROS,...SOFT,...PROYECTOS];const r=all.find(x=>x.id===id);if(r)goRubro(r);}
 
@@ -827,32 +668,42 @@ function renderIAKnowledge(){
 }
 
 /* PROYECTO ENTRIES */
-/* PENDIENTES POR PROYECTO */
-// pendientesData[rubroId] = [{texto, fecha, done}]
+/* PENDIENTES POR PROYECTO — Google Sheets */
 let pendientesData = {};
-const PEND_KEY = 'bitacora_pendientes';
 
-function loadPendientesLocal(){
-  try { pendientesData = JSON.parse(localStorage.getItem(PEND_KEY)||'{}'); } catch(e){ pendientesData={}; }
-}
-function savePendientesLocal(){
-  localStorage.setItem(PEND_KEY, JSON.stringify(pendientesData));
+async function loadPendientes(){
+  const rubro = state.rubro;
+  document.getElementById('pendientes-list').innerHTML='<div class="loading">Cargando pendientes...</div>';
+  try {
+    const rows = await apiGet('PENDIENTES');
+    // rows: [proyecto, texto, fecha, completado]
+    pendientesData[rubro] = rows.slice(1)
+      .filter(r => r[0] === rubro)
+      .map((r, i) => ({
+        _sheetIdx: i + 1, // 1-based, row in sheet after header
+        proyecto: r[0]||'',
+        texto: r[1]||'',
+        fecha: r[2]||'',
+        done: (r[3]||'').toLowerCase() === 'si'
+      }));
+    renderPendientes();
+  } catch(e) {
+    document.getElementById('pendientes-list').innerHTML='<div class="pend-empty">⚠️ Error cargando pendientes.</div>';
+  }
 }
 
 function renderPendientes(){
   const rubro = state.rubro;
   const items = (pendientesData[rubro]||[]);
-  const pending = items.map((p,i)=>({...p,_idx:i})).filter(p=>!p.done);
-  const done    = items.map((p,i)=>({...p,_idx:i})).filter(p=> p.done);
+  const pending = items.filter(p=>!p.done);
+  const done    = items.filter(p=> p.done);
   const el = document.getElementById('pendientes-list');
   if(!items.length){
     el.innerHTML='<div class="pend-empty">📋 No hay pendientes. ¡Agregá el primero!</div>';
     return;
   }
   let html = '';
-  if(pending.length){
-    html += pending.map(p=>pendienteHTML(p)).join('');
-  }
+  if(pending.length) html += pending.map(p=>pendienteHTML(p)).join('');
   if(done.length){
     html += `<div class="pend-section-label">✓ Completados (${done.length})</div>`;
     html += done.map(p=>pendienteHTML(p)).join('');
@@ -861,45 +712,54 @@ function renderPendientes(){
 }
 
 function pendienteHTML(p){
-  return `<div class="pendiente-item ${p.done?'completado':''}" id="pend-${p._idx}">
-    <div class="pend-check ${p.done?'done':''}" onclick="togglePend(${p._idx})">${p.done?'✓':''}</div>
+  const idx = p._sheetIdx;
+  return `<div class="pendiente-item ${p.done?'completado':''}">
+    <div class="pend-check ${p.done?'done':''}" onclick="togglePend(${idx})">${p.done?'✓':''}</div>
     <div class="pend-body">
       <div class="pend-texto">${p.texto}</div>
       <div class="pend-date">${p.fecha||''}</div>
     </div>
     <div class="pend-actions">
-      <button class="btn btn-ghost btn-sm" onclick="editPend(${p._idx})">✎</button>
-      <button class="btn btn-danger btn-sm" onclick="deletePend(${p._idx})">✕</button>
+      <button class="btn btn-ghost btn-sm" onclick="editPend(${idx})">✎</button>
+      <button class="btn btn-danger btn-sm" onclick="deletePend(${idx})">✕</button>
     </div>
   </div>`;
 }
 
-function togglePend(idx){
-  const rubro=state.rubro;
-  if(!pendientesData[rubro]) return;
-  pendientesData[rubro][idx].done = !pendientesData[rubro][idx].done;
-  savePendientesLocal();
-  renderPendientes();
-}
-
-function deletePend(idx){
-  const rubro=state.rubro;
-  if(!pendientesData[rubro]) return;
-  if(!confirm('¿Eliminar este pendiente?')) return;
-  pendientesData[rubro].splice(idx,1);
-  savePendientesLocal();
-  renderPendientes();
-}
-
-function editPend(idx){
-  const rubro=state.rubro;
-  const p=(pendientesData[rubro]||[])[idx];
+async function togglePend(sheetIdx){
+  const rubro = state.rubro;
+  const items = (pendientesData[rubro]||[]);
+  const p = items.find(x=>x._sheetIdx===sheetIdx);
   if(!p) return;
-  const nuevo=prompt('Editar pendiente:', p.texto);
-  if(nuevo===null) return;
-  pendientesData[rubro][idx].texto=nuevo.trim()||p.texto;
-  savePendientesLocal();
+  p.done = !p.done;
   renderPendientes();
+  try {
+    await apiPost('PENDIENTES_UPDATE', {sheetIdx, completado: p.done ? 'si' : 'no'});
+  } catch(e) { toast('Error actualizando estado','err'); }
+}
+
+async function deletePend(sheetIdx){
+  if(!confirm('¿Eliminar este pendiente?')) return;
+  const rubro = state.rubro;
+  pendientesData[rubro] = (pendientesData[rubro]||[]).filter(x=>x._sheetIdx!==sheetIdx);
+  renderPendientes();
+  try {
+    await apiPost('PENDIENTES_DELETE', {sheetIdx});
+    await loadPendientes();
+  } catch(e) { toast('Error eliminando','err'); }
+}
+
+async function editPend(sheetIdx){
+  const rubro = state.rubro;
+  const p = (pendientesData[rubro]||[]).find(x=>x._sheetIdx===sheetIdx);
+  if(!p) return;
+  const nuevo = prompt('Editar pendiente:', p.texto);
+  if(nuevo===null || nuevo.trim()==='') return;
+  p.texto = nuevo.trim();
+  renderPendientes();
+  try {
+    await apiPost('PENDIENTES_EDIT', {sheetIdx, texto: nuevo.trim()});
+  } catch(e) { toast('Error editando','err'); }
 }
 
 function toggleForm(){
@@ -939,21 +799,22 @@ async function saveEntry(){
   }
 }
 
-function saveEntryProy(){
+async function saveEntryProy(){
   const texto=document.getElementById('fp-texto').value.trim();
   if(!texto){toast('Escribí el pendiente antes de agregar.','err');return;}
   const rubro=state.rubro;
-  if(!pendientesData[rubro]) pendientesData[rubro]=[];
-  pendientesData[rubro].unshift({
-    texto,
-    fecha: new Date().toLocaleDateString('es-UY'),
-    done: false
-  });
-  savePendientesLocal();
-  document.getElementById('fp-texto').value='';
-  toggleFormProy();
-  renderPendientes();
-  toast('Pendiente agregado ✓','ok');
+  const fecha=new Date().toLocaleDateString('es-UY');
+  const fila=[rubro, texto, fecha, 'no'];
+  try {
+    toast('Guardando...','info');
+    await apiPost('PENDIENTES', fila);
+    document.getElementById('fp-texto').value='';
+    toggleFormProy();
+    await loadPendientes();
+    toast('Pendiente guardado en Sheets ✓','ok');
+  } catch(e){
+    toast('Error al guardar: '+e.message,'err');
+  }
 }
 
 /* EDIT */
@@ -1086,9 +947,8 @@ function toast(msg,type){
 showConsejo();
 buildHome();
 loadHome();
-loadPendientesLocal();
+// pendientes now load on demand from Sheets
 updateOfflineBadge();
 </script>
-
-
-</body></html>
+</body>
+</html>
