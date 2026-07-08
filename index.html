@@ -182,6 +182,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 }
 
 .loading { text-align: center; padding: 32px; color: #aaa; font-size: 13px; }
+  .skeleton { background: linear-gradient(90deg, #f0ede8 25%, #e8e5e0 50%, #f0ede8 75%); background-size: 200% 100%; animation: shimmer 1.2s infinite; border-radius: 8px; }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  .skeleton-item { height: 80px; margin-bottom: 10px; }
+  .skeleton-card { height: 60px; margin-bottom: 8px; }
 .status { position: fixed; bottom: 20px; right: 20px; padding: 10px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; box-shadow: 0 4px 16px rgba(0,0,0,.15); z-index: 999; transition: opacity .3s; }
 .status.ok { background: #1a6b35; color: #fff; }
 .status.err { background: #b02a2a; color: #fff; }
@@ -583,7 +587,8 @@ function buildProyecto(r){
   document.getElementById('proyecto-title').textContent = r.title;
   state.proySection = 'pendientes';
   switchProySection('pendientes');
-  loadPendientes();
+  // Preload both in parallel — pendientes shows immediately, avances ready when tab is clicked
+  Promise.all([loadPendientes(), loadAvances()]);
 }
 
 function switchProySection(sec){
@@ -723,22 +728,42 @@ function renderIAKnowledge(){
 /* PROYECTO ENTRIES */
 /* PENDIENTES POR PROYECTO — Google Sheets */
 let pendientesData = {};
+let proyCache = {}; // cache: { rubro: { pendientes: [...], avances: [...], loaded: bool } }
 
-async function loadPendientes(){
+function getProyCache(rubro) {
+  if(!proyCache[rubro]) proyCache[rubro] = { pendientes: null, avances: null };
+  return proyCache[rubro];
+}
+function invalidateProyCache(rubro) { if(proyCache[rubro]) proyCache[rubro] = { pendientes: null, avances: null }; }
+
+async function loadPendientes(force=false){
   const rubro = state.rubro;
-  document.getElementById('pendientes-list').innerHTML='<div class="loading">Cargando pendientes...</div>';
+  const pc = getProyCache(rubro);
+
+  // Use cache if available and not forced
+  if(!force && pc.pendientes !== null) {
+    pendientesData[rubro] = pc.pendientes;
+    renderPendientes();
+    return;
+  }
+
+  // Skeleton loading
+  document.getElementById('pendientes-list').innerHTML=
+    '<div class="skeleton skeleton-item"></div><div class="skeleton skeleton-item"></div><div class="skeleton skeleton-card"></div>';
+
   try {
     const rows = await apiGet('PENDIENTES');
-    // rows: [proyecto, texto, fecha, completado]
-    pendientesData[rubro] = rows.slice(1)
+    const data = rows.slice(1)
       .filter(r => r[0] === rubro)
       .map((r, i) => ({
-        _sheetIdx: i + 1, // 1-based, row in sheet after header
+        _sheetIdx: i + 1,
         proyecto: r[0]||'',
         texto: r[1]||'',
         fecha: r[2]||'',
         done: (r[3]||'').toLowerCase() === 'si'
       }));
+    pendientesData[rubro] = data;
+    pc.pendientes = data;
     renderPendientes();
   } catch(e) {
     document.getElementById('pendientes-list').innerHTML='<div class="pend-empty">⚠️ Error cargando pendientes.</div>';
@@ -798,7 +823,8 @@ async function deletePend(sheetIdx){
   renderPendientes();
   try {
     await apiPost('PENDIENTES_DELETE', {sheetIdx});
-    await loadPendientes();
+    invalidateProyCache(state.rubro);
+    await loadPendientes(true);
   } catch(e) { toast('Error eliminando','err'); }
 }
 
@@ -863,7 +889,8 @@ async function saveEntryProy(){
     await apiPost('PENDIENTES', fila);
     document.getElementById('fp-texto').value='';
     toggleFormProy();
-    await loadPendientes();
+    invalidateProyCache(state.rubro);
+    await loadPendientes(true);
     toast('Pendiente guardado en Sheets ✓','ok');
   } catch(e){
     toast('Error al guardar: '+e.message,'err');
@@ -981,12 +1008,24 @@ async function saveProv(){
 /* AVANCES POR PROYECTO */
 let avancesData = {};
 
-async function loadAvances(){
+async function loadAvances(force=false){
   const rubro = state.rubro;
-  document.getElementById('avances-list').innerHTML='<div class="loading">Cargando avances...</div>';
+  const pc = getProyCache(rubro);
+
+  // Use cache if available and not forced
+  if(!force && pc.avances !== null) {
+    avancesData[rubro] = pc.avances;
+    renderAvances();
+    return;
+  }
+
+  // Skeleton loading
+  document.getElementById('avances-list').innerHTML=
+    '<div class="skeleton skeleton-item"></div><div class="skeleton skeleton-item"></div><div class="skeleton skeleton-card"></div>';
+
   try {
     const rows = await apiGet('AVANCES');
-    avancesData[rubro] = rows.slice(1)
+    const data = rows.slice(1)
       .filter(r => r[0] === rubro)
       .map((r, i) => ({
         _sheetIdx: i + 1,
@@ -995,6 +1034,8 @@ async function loadAvances(){
         fecha: r[2]||'',
         tachado: (r[3]||'').toLowerCase() === 'si'
       }));
+    avancesData[rubro] = data;
+    pc.avances = data;
     renderAvances();
   } catch(e) {
     document.getElementById('avances-list').innerHTML='<div class="pend-empty">⚠️ Error cargando avances.</div>';
@@ -1047,7 +1088,8 @@ async function saveAvance(){
     await apiPost('AVANCES', fila);
     document.getElementById('fa-texto').value='';
     toggleFormAvance();
-    await loadAvances();
+    invalidateProyCache(state.rubro);
+    await loadAvances(true);
     toast('Avance registrado ✓','ok');
   } catch(e){ toast('Error: '+e.message,'err'); }
 }
@@ -1083,7 +1125,8 @@ async function deleteAvance(sheetIdx){
   renderAvances();
   try {
     await apiPost('AVANCES_DELETE',{sheetIdx});
-    await loadAvances();
+    invalidateProyCache(state.rubro);
+    await loadAvances(true);
   } catch(e){ toast('Error eliminando','err'); }
 }
 
@@ -1091,7 +1134,11 @@ async function deleteAvance(sheetIdx){
 async function syncAll(){
   toast('Sincronizando...','info');
   cache.entries=null; cache.provs=null;
+  proyCache={};
   await loadHome();
+  if(state.rubro && PROYECTOS.find(p=>p.id===state.rubro)){
+    await Promise.all([loadPendientes(true), loadAvances(true)]);
+  }
   toast('Sincronizado ✓','ok');
 }
 
