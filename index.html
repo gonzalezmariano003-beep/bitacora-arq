@@ -93,6 +93,20 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
   .pendiente-item:hover .pend-actions { opacity: 1; }
   .pend-empty { text-align: center; padding: 40px 20px; color: #aaa; font-size: 13px; }
   .pend-section-label { font-size: 11px; font-weight: 600; color: #aaa; text-transform: uppercase; letter-spacing: .05em; margin: 16px 0 8px; }
+  .avance-item { background: #fff; border: 1px solid #e8e5e0; border-radius: 10px; padding: 12px 14px; display: flex; align-items: flex-start; gap: 10px; transition: opacity .2s; margin-bottom: 8px; }
+  .avance-item.tachado { opacity: .5; }
+  .avance-item.tachado .avance-texto { text-decoration: line-through; color: #aaa; }
+  .avance-check { width: 20px; height: 20px; border-radius: 6px; border: 2px solid #e8e5e0; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all .15s; margin-top: 2px; }
+  .avance-check:hover { border-color: #8b7355; }
+  .avance-check.done { background: #8b7355; border-color: #8b7355; color: #fff; }
+  .avance-body { flex: 1; min-width: 0; }
+  .avance-texto { font-size: 13px; color: #333; line-height: 1.5; word-break: break-word; }
+  .avance-date { font-size: 11px; color: #bbb; margin-top: 4px; }
+  .avance-actions { display: flex; gap: 6px; opacity: 0; transition: opacity .15s; flex-shrink: 0; }
+  .avance-item:hover .avance-actions { opacity: 1; }
+  .proyecto-section-tabs { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 2px solid #e8e5e0; }
+  .proy-tab { padding: 10px 18px; font-size: 13px; cursor: pointer; border-bottom: 2px solid transparent; color: #888; margin-bottom: -2px; transition: all .15s; }
+  .proy-tab.active { color: #8b7355; border-bottom-color: #8b7355; font-weight: 500; }
 
 /* TABS */
 .tabs { display: flex; gap: 0; margin-bottom: 20px; border-bottom: 1px solid #e8e5e0; overflow-x: auto; }
@@ -328,21 +342,49 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 
   <!-- NOTAS DE PROYECTO -->
   <div id="view-proyecto" style="display:none">
-    <div class="section-header">
-      <div class="section-title" id="proyecto-title">Pendientes</div>
-      <button class="btn btn-primary" onclick="toggleFormProy()">＋ Pendiente</button>
+    <div class="section-title" id="proyecto-title" style="margin-bottom:16px;font-size:16px;font-weight:500"></div>
+    <div class="proyecto-section-tabs">
+      <div class="proy-tab active" id="ptab-pendientes" onclick="switchProySection('pendientes')">📋 Pendientes</div>
+      <div class="proy-tab" id="ptab-avances" onclick="switchProySection('avances')">📅 Registro de avances</div>
     </div>
-    <div class="form-panel hidden" id="entry-form-proy">
-      <div class="form-group">
-        <label>Pendiente</label>
-        <textarea id="fp-texto" placeholder="Describí el pendiente o tarea..."></textarea>
+
+    <!-- PENDIENTES -->
+    <div id="proy-section-pendientes">
+      <div class="section-header" style="margin-bottom:12px">
+        <div></div>
+        <button class="btn btn-primary" onclick="toggleFormProy()">＋ Pendiente</button>
       </div>
-      <div class="form-actions">
-        <button class="btn btn-ghost" onclick="toggleFormProy()">Cancelar</button>
-        <button class="btn btn-primary" onclick="saveEntryProy()">Agregar</button>
+      <div class="form-panel hidden" id="entry-form-proy">
+        <div class="form-group">
+          <label>Pendiente</label>
+          <textarea id="fp-texto" placeholder="Describí el pendiente o tarea..."></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" onclick="toggleFormProy()">Cancelar</button>
+          <button class="btn btn-primary" onclick="saveEntryProy()">Agregar</button>
+        </div>
       </div>
+      <div id="pendientes-list"></div>
     </div>
-    <div id="pendientes-list"></div>
+
+    <!-- AVANCES -->
+    <div id="proy-section-avances" style="display:none">
+      <div class="section-header" style="margin-bottom:12px">
+        <div></div>
+        <button class="btn btn-primary" onclick="toggleFormAvance()">＋ Avance</button>
+      </div>
+      <div class="form-panel hidden" id="avance-form">
+        <div class="form-group">
+          <label>Descripción del cambio o avance</label>
+          <textarea id="fa-texto" placeholder="Ej: Se modificó la planta baja — se corrió el acceso principal 1m al norte..."></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-ghost" onclick="toggleFormAvance()">Cancelar</button>
+          <button class="btn btn-primary" onclick="saveAvance()">Registrar</button>
+        </div>
+      </div>
+      <div id="avances-list"></div>
+    </div>
   </div>
 </div>
 
@@ -538,8 +580,19 @@ function buildSubs(r){
     </div>`).join('');
 }
 function buildProyecto(r){
-  document.getElementById('proyecto-title').textContent = r.title + ' — Pendientes';
+  document.getElementById('proyecto-title').textContent = r.title;
+  state.proySection = 'pendientes';
+  switchProySection('pendientes');
   loadPendientes();
+}
+
+function switchProySection(sec){
+  state.proySection = sec;
+  document.getElementById('proy-section-pendientes').style.display = sec==='pendientes' ? '' : 'none';
+  document.getElementById('proy-section-avances').style.display   = sec==='avances'    ? '' : 'none';
+  document.getElementById('ptab-pendientes').classList.toggle('active', sec==='pendientes');
+  document.getElementById('ptab-avances').classList.toggle('active',    sec==='avances');
+  if(sec==='avances') loadAvances();
 }
 function goRubroById(id){const all=[...RUBROS,...SOFT,...PROYECTOS];const r=all.find(x=>x.id===id);if(r)goRubro(r);}
 
@@ -923,6 +976,115 @@ async function saveProv(){
     await loadProvs();
     toast('Proveedor guardado ✓','ok');
   } catch(e){toast('Error: '+e.message,'err');}
+}
+
+/* AVANCES POR PROYECTO */
+let avancesData = {};
+
+async function loadAvances(){
+  const rubro = state.rubro;
+  document.getElementById('avances-list').innerHTML='<div class="loading">Cargando avances...</div>';
+  try {
+    const rows = await apiGet('AVANCES');
+    avancesData[rubro] = rows.slice(1)
+      .filter(r => r[0] === rubro)
+      .map((r, i) => ({
+        _sheetIdx: i + 1,
+        proyecto: r[0]||'',
+        texto: r[1]||'',
+        fecha: r[2]||'',
+        tachado: (r[3]||'').toLowerCase() === 'si'
+      }));
+    renderAvances();
+  } catch(e) {
+    document.getElementById('avances-list').innerHTML='<div class="pend-empty">⚠️ Error cargando avances.</div>';
+  }
+}
+
+function renderAvances(){
+  const rubro = state.rubro;
+  const items = (avancesData[rubro]||[]).slice().reverse();
+  const el = document.getElementById('avances-list');
+  if(!items.length){
+    el.innerHTML='<div class="pend-empty">📅 No hay avances registrados aún.</div>';
+    return;
+  }
+  el.innerHTML = items.map(a=>avanceHTML(a)).join('');
+}
+
+function avanceHTML(a){
+  const idx = a._sheetIdx;
+  return `<div class="avance-item ${a.tachado?'tachado':''}">
+    <div class="avance-check ${a.tachado?'done':''}" onclick="toggleAvance(${idx})">${a.tachado?'✓':''}</div>
+    <div class="avance-body">
+      <div class="avance-texto">${a.texto}</div>
+      <div class="avance-date">${a.fecha}</div>
+    </div>
+    <div class="avance-actions">
+      <button class="btn btn-ghost btn-sm" onclick="editAvance(${idx})">✎</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteAvance(${idx})">✕</button>
+    </div>
+  </div>`;
+}
+
+function toggleFormAvance(){
+  const f=document.getElementById('avance-form');
+  f.classList.toggle('hidden');
+  if(!f.classList.contains('hidden')){
+    document.getElementById('fa-texto').value='';
+    document.getElementById('fa-texto').focus();
+  }
+}
+
+async function saveAvance(){
+  const texto=document.getElementById('fa-texto').value.trim();
+  if(!texto){toast('Describí el avance antes de guardar.','err');return;}
+  const rubro=state.rubro;
+  const fecha=new Date().toLocaleDateString('es-UY');
+  const fila=[rubro, texto, fecha, 'no'];
+  try {
+    toast('Guardando...','info');
+    await apiPost('AVANCES', fila);
+    document.getElementById('fa-texto').value='';
+    toggleFormAvance();
+    await loadAvances();
+    toast('Avance registrado ✓','ok');
+  } catch(e){ toast('Error: '+e.message,'err'); }
+}
+
+async function toggleAvance(sheetIdx){
+  const rubro=state.rubro;
+  const a=(avancesData[rubro]||[]).find(x=>x._sheetIdx===sheetIdx);
+  if(!a) return;
+  a.tachado=!a.tachado;
+  renderAvances();
+  try {
+    await apiPost('AVANCES_UPDATE',{sheetIdx, tachado: a.tachado?'si':'no'});
+  } catch(e){ toast('Error actualizando','err'); }
+}
+
+async function editAvance(sheetIdx){
+  const rubro=state.rubro;
+  const a=(avancesData[rubro]||[]).find(x=>x._sheetIdx===sheetIdx);
+  if(!a) return;
+  const nuevo=prompt('Editar avance:',a.texto);
+  if(nuevo===null||nuevo.trim()==='') return;
+  a.texto=nuevo.trim();
+  renderAvances();
+  try {
+    await apiPost('AVANCES_EDIT',{sheetIdx, texto:nuevo.trim()});
+  } catch(e){ toast('Error editando','err'); }
+}
+
+async function deleteAvance(sheetIdx){
+  if(!confirm('¿Eliminar este avance?')) return;
+  const rubro=state.rubro;
+  avancesData[rubro]=(avancesData[rubro]||[]).filter(x=>x._sheetIdx!==sheetIdx);
+  renderAvances();
+  try {
+    await apiPost('AVANCES_DELETE',{sheetIdx});
+    await loadAvances();
+  } catch(e){ toast('Error eliminando','err'); }
 }
 
 /* SYNC */
